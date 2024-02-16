@@ -1,0 +1,73 @@
+[
+    {
+      "id": "1",
+      "estado": "En revisión",
+      "fechaIngreso": "2024-02-01",
+      "fechaEstimadaFin": "2024-02-15",
+      "movimientos": [
+        {
+          "fecha": "2024-02-01",
+          "descripcion": "Reparación ingresada en el sistema",
+          "tipo": "ingreso",
+          "icono": "icono-ingreso"
+        },
+        {
+          "fecha": "2024-02-02",
+          "descripcion": "Diagnóstico inicial completado",
+          "tipo": "diagnostico",
+          "icono": "icono-diagnostico"
+        },
+        {
+          "fecha": "2024-02-10",
+          "descripcion": "Reparación en proceso",
+          "tipo": "proceso",
+          "icono": "icono-proceso"
+        },
+        {
+          "fecha": "2024-02-14",
+          "descripcion": "Reparación completada, pendiente de revisión final",
+          "tipo": "revision",
+          "icono": "icono-revision"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "estado": "Completada",
+      "fechaIngreso": "2024-01-22",
+      "fechaEstimadaFin": "2024-02-05",
+      "movimientos": [
+        {
+          "fecha": "2024-01-22",
+          "descripcion": "Reparación ingresada en el sistema",
+          "tipo": "ingreso",
+          "icono": "icono-ingreso"
+        },
+        {
+          "fecha": "2024-01-24",
+          "descripcion": "Partes necesarias para la reparación identificadas",
+          "tipo": "identificacion",
+          "icono": "icono-identificacion"
+        },
+        {
+          "fecha": "2024-01-30",
+          "descripcion": "Partes recibidas y reparación iniciada",
+          "tipo": "inicio",
+          "icono": "icono-inicio"
+        },
+        {
+          "fecha": "2024-02-04",
+          "descripcion": "Pruebas finales en proceso",
+          "tipo": "pruebas",
+          "icono": "icono-pruebas"
+        },
+        {
+          "fecha": "2024-02-05",
+          "descripcion": "Reparación completada y equipo listo para entrega",
+          "tipo": "completada",
+          "icono": "icono-completada"
+        }
+      ]
+    }
+  ]
+  
