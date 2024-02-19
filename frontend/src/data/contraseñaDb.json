@@ -1,0 +1,19 @@
+[
+    {
+      "tipo": "administrador",
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "mail": "juan.perez@example.com",
+      "nombreUs": "juanAdmin",
+      "contraseña": "admin123"
+    },
+    {
+      "tipo": "operador",
+      "nombre": "Ana",
+      "apellido": "López",
+      "mail": "ana.lopez@example.com",
+      "nombreUs": "anaOperador",
+      "contraseña": "oper123"
+    }
+  ]
+  

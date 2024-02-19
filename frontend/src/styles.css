@@ -1,0 +1,10 @@
+/* styles.css */
+.form-login-derecha {
+    position: absolute;
+    right: 0;
+    top: 2%;
+    transform: translateY(-50%);
+    padding: 10px;
+    /* Añade más estilos aquí según necesites */
+  }
+  

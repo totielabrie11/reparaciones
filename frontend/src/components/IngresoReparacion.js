@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function IngresoReparacion() {
+function IngresoReparacion({volverAPrincipal}) {
   const [formData, setFormData] = useState({
     tipoEntidad: '',
     identificacion: '',
@@ -144,6 +144,7 @@ const getCausaPlaceholder = () => {
         <button type="submit">Enviar</button>
       </form>
        )}
+       <button onClick={volverAPrincipal}>Volver</button>
     </div>
   );
 }
