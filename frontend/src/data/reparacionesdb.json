@@ -32,5 +32,21 @@
     "estado": "sin ingresar",
     "movimientos": [],
     "id": 2
+  },
+  {
+    "tipoEntidad": "razonSocial",
+    "nombre": "totie",
+    "dniCuit": "3020202002020",
+    "domicilio": "labrie",
+    "email": "martinezcarlosmanuel.1@gmail.com",
+    "telefono": "1151515151515",
+    "nombreContacto": "alguien",
+    "modeloBomba": "vieja",
+    "numeroSerie": "",
+    "tipoServicio": "garantia",
+    "causa": "poneme una nueva",
+    "observaciones": "son una mierda",
+    "estado": "sin ingresar",
+    "id": 3
   }
 ]
