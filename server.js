@@ -58,8 +58,8 @@ app.post('/api/reparaciones', (req, res) => {
   });
 });
 
-// Endpoint que devuelve las reparaciones que no han sido ingresadas
 
+// Endpoint que devuelve las reparaciones que no han sido ingresadas
 app.get('/api/reparaciones/sinIngresar', (req, res) => {
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
   fs.readFile(archivoDbPath, 'utf8', (err, data) => {
@@ -74,6 +74,48 @@ app.get('/api/reparaciones/sinIngresar', (req, res) => {
     } catch (error) {
       console.error('Could not parse JSON:', error);
       res.status(500).send('Error al analizar los datos de reparaciones');
+    }
+  });
+});
+
+// Endpoint para ingresar una reparación (cambiar su estado a 'ingresada')
+app.post('/api/reparaciones/ingresar/:id', (req, res) => {
+  const { id } = req.params;
+  const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+  
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+    
+    let reparaciones = JSON.parse(data);
+    let reparacionIndex = reparaciones.findIndex(rep => rep.id === parseInt(id));
+
+    if (reparacionIndex !== -1) {
+      // Actualiza el estado de la reparación a 'ingresada'
+      reparaciones[reparacionIndex].estado = 'ingresada';
+
+      // Guarda el archivo actualizado
+      fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send({ message: 'Error al actualizar el archivo de base de datos' });
+        }
+        
+        // Vuelve a leer el archivo actualizado y envía las reparaciones sin ingresar
+        fs.readFile(archivoDbPath, 'utf8', (err, updatedData) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+          }
+          const updatedReparaciones = JSON.parse(updatedData);
+          const reparacionesSinIngresar = updatedReparaciones.filter(rep => rep.estado.toLowerCase() === "sin ingresar");
+          res.json(reparacionesSinIngresar);
+        });
+      });
+    } else {
+      res.status(404).send({ message: 'Reparación no encontrada' });
     }
   });
 });
@@ -95,8 +137,6 @@ app.get('/api/reparaciones/:id', (req, res) => {
     res.status(404).send({ message: 'Reparación no encontrada' });
   }
 });
-
-
 
 
 app.listen(PORT, () => {

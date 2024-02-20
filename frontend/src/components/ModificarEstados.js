@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function ModificarEstados() {
+function ModificarEstados({ volver }) {
   const [reparaciones, setReparaciones] = useState([]);
 
   useEffect(() => {
@@ -24,6 +24,7 @@ function ModificarEstados() {
           </li>
         ))}
       </ul>
+      <button onClick={volver}>Volver a la vista principal</button>
     </div>
   );
 }

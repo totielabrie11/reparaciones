@@ -13,7 +13,9 @@
     "causa": "no anda ni pa tra",
     "observaciones": "dosivac choorros",
     "estado": "ingresada",
-    "movimientos": ["En revision"],
+    "movimientos": [
+      "En revision"
+    ],
     "id": 1
   },
   {
@@ -29,7 +31,7 @@
     "tipoServicio": "garantia",
     "causa": "nunca funciono ",
     "observaciones": "me robaron la guitarra",
-    "estado": "sin ingresar",
+    "estado": "ingresada",
     "movimientos": "",
     "id": 2
   },
@@ -46,8 +48,42 @@
     "tipoServicio": "garantia",
     "causa": "poneme una nueva",
     "observaciones": "son una mierda",
-    "estado": "sin ingresar",
+    "estado": "ingresada",
     "movimientos": "",
     "id": 3
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "pablo",
+    "dniCuit": "305664646",
+    "domicilio": "ugarriz",
+    "email": "pablo@dosivac.com",
+    "telefono": "1151515151515",
+    "nombreContacto": "amada esposa",
+    "modeloBomba": "DS500",
+    "numeroSerie": "",
+    "tipoServicio": "garantia",
+    "causa": "la compre nunca funciono",
+    "observaciones": "una mierda",
+    "estado": "ingresada",
+    "movimientos": "",
+    "id": 4
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "Melanie",
+    "dniCuit": "300020054",
+    "domicilio": "oro595",
+    "email": "melanie@dosivac.com",
+    "telefono": "15151515151",
+    "nombreContacto": "alguien",
+    "modeloBomba": "nose",
+    "numeroSerie": "121212",
+    "tipoServicio": "revision",
+    "causa": "no anda ni pa tra",
+    "observaciones": "quiero que me devuelvan la plata",
+    "estado": "ingresada",
+    "movimientos": "",
+    "id": 5
   }
 ]
