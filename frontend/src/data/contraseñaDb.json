@@ -8,7 +8,7 @@
       "contraseña": "admin123"
     },
     {
-      "tipo": "operador",
+      "tipo": "otro",
       "nombre": "Ana",
       "apellido": "López",
       "mail": "ana.lopez@example.com",

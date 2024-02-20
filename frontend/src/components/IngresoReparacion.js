@@ -15,6 +15,7 @@ function IngresoReparacion({ volverAPrincipal }) {
     causa: '',
     observaciones: '',
     estado: 'sin ingresar',
+    movimientos: '',
   });
 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);

@@ -12,8 +12,8 @@
     "tipoServicio": "revision",
     "causa": "no anda ni pa tra",
     "observaciones": "dosivac choorros",
-    "estado": "sin ingresar",
-    "movimientos": [],
+    "estado": "ingresada",
+    "movimientos": ["En revision"],
     "id": 1
   },
   {
@@ -30,7 +30,7 @@
     "causa": "nunca funciono ",
     "observaciones": "me robaron la guitarra",
     "estado": "sin ingresar",
-    "movimientos": [],
+    "movimientos": "",
     "id": 2
   },
   {
@@ -47,6 +47,7 @@
     "causa": "poneme una nueva",
     "observaciones": "son una mierda",
     "estado": "sin ingresar",
+    "movimientos": "",
     "id": 3
   }
 ]

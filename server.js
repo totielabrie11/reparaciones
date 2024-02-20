@@ -58,6 +58,27 @@ app.post('/api/reparaciones', (req, res) => {
   });
 });
 
+// Endpoint que devuelve las reparaciones que no han sido ingresadas
+
+app.get('/api/reparaciones/sinIngresar', (req, res) => {
+  const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+    try {
+      const reparaciones = JSON.parse(data);
+      const reparacionesSinIngresar = reparaciones.filter(reparacion => reparacion.estado.toLowerCase() === "sin ingresar");
+      res.json(reparacionesSinIngresar);
+    } catch (error) {
+      console.error('Could not parse JSON:', error);
+      res.status(500).send('Error al analizar los datos de reparaciones');
+    }
+  });
+});
+
+
 
 // Endpoint para buscar el estado de una reparación
 app.get('/api/reparaciones/:id', (req, res) => {
@@ -74,6 +95,8 @@ app.get('/api/reparaciones/:id', (req, res) => {
     res.status(404).send({ message: 'Reparación no encontrada' });
   }
 });
+
+
 
 
 app.listen(PORT, () => {
