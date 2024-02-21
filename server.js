@@ -118,6 +118,7 @@ app.get('/api/reparaciones/sinIngresar', (req, res) => {
 // Endpoint para ingresar una reparación (cambiar su estado a 'ingresada')
 app.post('/api/reparaciones/ingresar/:id', (req, res) => {
   const { id } = req.params;
+  const fechaIngreso = req.body.fechaIngreso;
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
   
   fs.readFile(archivoDbPath, 'utf8', (err, data) => {
@@ -130,8 +131,9 @@ app.post('/api/reparaciones/ingresar/:id', (req, res) => {
     let reparacionIndex = reparaciones.findIndex(rep => rep.id === parseInt(id));
 
     if (reparacionIndex !== -1) {
-      // Actualiza el estado de la reparación a 'ingresada'
+      // Actualiza el estado de la reparación a 'ingresada' y agrega la fecha de ingreso
       reparaciones[reparacionIndex].estado = 'ingresada';
+      reparaciones[reparacionIndex].fechaIngreso = fechaIngreso;
 
       // Guarda el archivo actualizado
       fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
@@ -156,7 +158,6 @@ app.post('/api/reparaciones/ingresar/:id', (req, res) => {
     }
   });
 });
-
 
 
 // Endpoint para buscar el estado de una reparación

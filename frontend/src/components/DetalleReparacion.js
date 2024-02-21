@@ -11,9 +11,9 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) { // Usando cerrarDeta
       <p>Nombre: {reparacion.nombre}</p>
       <p>Modelo: {reparacion.modeloBomba}</p>
       <p>Estado: {reparacion.estado}</p>
-      <p>Fecha de Ingreso: {reparacion.fechaIngreso}</p>
       <p>Fecha Estimada de Finalización: {reparacion.fechaEstimadaFin}</p>
       <h3>Movimientos:</h3>
+      <p>Fecha de Ingreso: {reparacion.fechaIngreso}</p>
       {movimientosValidos.length > 0 ? (
         <ul>
           {movimientosValidos.map((mov, index) => (

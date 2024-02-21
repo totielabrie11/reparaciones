@@ -22,18 +22,41 @@ function AceptarReparacion({ volver }) {
     fetchReparacionesSinIngresar();
   }, []);
 
+  // Función para formatear la fecha ISO a un formato más legible
+  function formatearFechaISO(fechaIso) {
+    const fecha = new Date(fechaIso);
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const ano = fecha.getFullYear();
+    const hora = fecha.getHours().toString().padStart(2, '0');
+    const minutos = fecha.getMinutes().toString().padStart(2, '0');
+    console.log(`${dia}-${mes}-${ano} ${hora}:${minutos}`)
+    return `${dia}-${mes}-${ano} ${hora}:${minutos}`;
+  }
+
   const ingresarReparacion = async (id) => {
     try {
+      // Obtiene la fecha actual en formato ISO y la formatea
+      const fechaIngresoISO = new Date().toISOString();
+      const fechaIngresoFormateada = formatearFechaISO(fechaIngresoISO);
+      console.log("Enviando fecha formateada:", { fechaIngreso: fechaIngresoFormateada });
+
+
       const url = `http://localhost:3000/api/reparaciones/ingresar/${id}`;
       const response = await fetch(url, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Asegúrate de enviar la fecha formateada
+        body: JSON.stringify({ fechaIngreso: fechaIngresoFormateada })
       });
 
       if (!response.ok) {
         throw new Error('Error al actualizar el estado de la reparación.');
       }
-      
-      // Actualiza la lista de reparaciones sin ingresar
+
+      // Actualiza la lista de reparaciones sin ingresar con la respuesta del servidor
       const actualizadas = await response.json();
       setReparacionesSinIngresar(actualizadas);
     } catch (error) {
@@ -59,9 +82,8 @@ function AceptarReparacion({ volver }) {
       ) : (
         <p>No hay reparaciones sin ingresar.</p>
       )}
-       <button onClick={volver}>Volver a la vista principal</button>
+      <button onClick={volver}>Volver a la vista principal</button>
     </div>
-    
   );
 }
 
