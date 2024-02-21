@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { jsPDF } from "jspdf";
 
 function IngresoReparacion({ volverAPrincipal }) {
   const [formData, setFormData] = useState({
@@ -31,6 +32,20 @@ function IngresoReparacion({ volverAPrincipal }) {
     }));
   };
 
+  const generarPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Ticket de Pre-Carga de Reparación", 10, 10);
+    doc.text(`ID identificacion unica para seguimiento: ${formData.id}`, 10, 20);
+    doc.text(`Modelo de bomba: ${formData.modeloBomba}`, 10, 30);
+    doc.text(`Nombre: ${formData.nombre}`, 10, 40);
+    // Agrega más campos según necesites...
+    doc.text(`Observaciones: ${formData.causa}`, 10, 50);
+    doc.text(`Observaciones: ${formData.observaciones}`, 10, 60);
+
+    // Guardar el PDF
+    doc.save("ticket-reparacion.pdf");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = 'http://localhost:3000/api/reparaciones'; // Asegúrate de que esta es la URL correcta de tu API
@@ -47,6 +62,7 @@ function IngresoReparacion({ volverAPrincipal }) {
       const result = await response.json();
       if (response.ok) {
         console.log(result.message); // Mensaje de éxito del servidor
+        generarPDF(); // Generar y descargar el PDF
         volverAPrincipal(); // Manejar la navegación o limpiar el formulario como se desee
       } else {
         console.error(result.message); // Mensaje de error del servidor
@@ -56,6 +72,7 @@ function IngresoReparacion({ volverAPrincipal }) {
       console.error('Error al realizar la petición:', error);
       // Manejar el error mostrando un mensaje al usuario en la UI
     }
+    
   };
 
   const getCausaPlaceholder = () => {
