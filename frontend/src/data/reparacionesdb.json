@@ -12,7 +12,7 @@
     "tipoServicio": "revision",
     "causa": "no anda ni pa tra",
     "observaciones": "dosivac choorros",
-    "estado": "ingresada",
+    "estado": "en revisión",
     "movimientos": [
       "En revision"
     ],
@@ -31,7 +31,7 @@
     "tipoServicio": "garantia",
     "causa": "nunca funciono ",
     "observaciones": "me robaron la guitarra",
-    "estado": "ingresada",
+    "estado": "en revisión",
     "movimientos": "",
     "id": 2
   },
@@ -48,7 +48,7 @@
     "tipoServicio": "garantia",
     "causa": "poneme una nueva",
     "observaciones": "son una mierda",
-    "estado": "ingresada",
+    "estado": "en revisión",
     "movimientos": "",
     "id": 3
   },
@@ -65,7 +65,7 @@
     "tipoServicio": "garantia",
     "causa": "la compre nunca funciono",
     "observaciones": "una mierda",
-    "estado": "ingresada",
+    "estado": "en revisión",
     "movimientos": "",
     "id": 4
   },
@@ -82,7 +82,7 @@
     "tipoServicio": "revision",
     "causa": "no anda ni pa tra",
     "observaciones": "quiero que me devuelvan la plata",
-    "estado": "ingresada",
+    "estado": "sin ingresar",
     "movimientos": "",
     "id": 5
   }

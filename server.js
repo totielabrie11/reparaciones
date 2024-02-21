@@ -58,6 +58,43 @@ app.post('/api/reparaciones', (req, res) => {
   });
 });
 
+// Endpoint que devuelve todas las reparaciones
+app.get('/api/reparaciones/todas', (req, res) => {
+  const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+    try {
+      const reparaciones = JSON.parse(data);
+      
+      res.json(reparaciones);
+    } catch (error) {
+      console.error('Could not parse JSON:', error);
+      res.status(500).send('Error al analizar los datos de reparaciones');
+    }
+  });
+});
+
+// Endpoint que devuelve las reparaciones que ya se encuentran ingresadas
+app.get('/api/reparaciones/ingresadas', (req, res) => {
+  const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+    try {
+      const reparaciones = JSON.parse(data);
+      const reparacionesSinIngresar = reparaciones.filter(reparacion => reparacion.estado.toLowerCase() === "ingresada");
+      res.json(reparacionesSinIngresar);
+    } catch (error) {
+      console.error('Could not parse JSON:', error);
+      res.status(500).send('Error al analizar los datos de reparaciones');
+    }
+  });
+});
 
 // Endpoint que devuelve las reparaciones que no han sido ingresadas
 app.get('/api/reparaciones/sinIngresar', (req, res) => {
@@ -136,6 +173,48 @@ app.get('/api/reparaciones/:id', (req, res) => {
   } else {
     res.status(404).send({ message: 'Reparación no encontrada' });
   }
+});
+
+app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
+  const { id } = req.params; // Obtén el ID de la reparación desde la URL
+  const { nuevoEstado } = req.body; // Obtén el nuevo estado desde el cuerpo de la solicitud
+
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error leyendo el archivo de base de datos:', err);
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+
+    try {
+      let reparaciones = JSON.parse(data);
+      let reparacionEncontrada = false;
+
+      // Actualizar el estado de la reparación correspondiente
+      reparaciones = reparaciones.map(reparacion => {
+        if (reparacion.id === parseInt(id)) {
+          reparacionEncontrada = true;
+          return { ...reparacion, estado: nuevoEstado };
+        }
+        return reparacion;
+      });
+
+      if (!reparacionEncontrada) {
+        return res.status(404).send({ message: 'Reparación no encontrada' });
+      }
+
+      // Guardar las reparaciones actualizadas en el archivo JSON
+      fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
+        if (err) {
+          console.error('Error escribiendo en el archivo de base de datos:', err);
+          return res.status(500).send({ message: 'Error al actualizar la reparación' });
+        }
+        res.send(reparaciones); // Devuelve la lista actualizada de reparaciones
+      });
+    } catch (error) {
+      console.error('Error al analizar los datos de reparaciones:', error);
+      res.status(500).send({ message: 'Error al procesar los datos de reparaciones' });
+    }
+  });
 });
 
 
