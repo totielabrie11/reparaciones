@@ -87,8 +87,10 @@
     "causa": "revisame esta",
     "observaciones": "no anda no se por que",
     "estado": "en revisión",
-    "movimientos": "",
-    "fechaIngreso": "22-02-2024 11:51",
+    "movimientos": [
+      "La reparación melanie ha pasado a revisión."
+    ],
+    "fechaIngreso": "22-02-2024 14:51",
     "id": 5
   }
 ]

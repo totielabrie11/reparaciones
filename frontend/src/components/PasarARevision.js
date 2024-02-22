@@ -16,13 +16,15 @@ function ModificarEstados({ volver }) {
 
   const pasarARevision = async (rep) => {
     // Realizar la solicitud al servidor para actualizar el estado de la reparación
+    const nuevoMovimiento = `La reparación ${rep.nombre} ha pasado a revisión.`;
     try {
       const response = await fetch(`http://localhost:3000/api/reparaciones/actualizarEstado/${rep.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ nuevoEstado: 'en revisión' }),
+        body: JSON.stringify({ nuevoEstado: 'en revisión' , nuevoMovimiento  }),
+  
       });
       if (!response.ok) {
         throw new Error('No se pudo actualizar el estado de la reparación.');

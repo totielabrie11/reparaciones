@@ -150,7 +150,7 @@ app.get('/api/reparaciones/todas', (req, res) => {
   });
 });
 
-// Endpoint que devuelve las reparaciones que ya se encuentran ingresadas
+// Endpoint que devuelve las reparaciones que ya se encuentran en revision para presupuesto
 app.get('/api/reparaciones/en_revision', (req, res) => {
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
   fs.readFile(archivoDbPath, 'utf8', (err, data) => {
@@ -171,6 +171,7 @@ app.get('/api/reparaciones/en_revision', (req, res) => {
 
 // Endpoint que devuelve las reparaciones que ya se encuentran ingresadas
 app.get('/api/reparaciones/ingresadas', (req, res) => {
+  
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
   fs.readFile(archivoDbPath, 'utf8', (err, data) => {
     if (err) {
@@ -269,8 +270,8 @@ app.get('/api/reparaciones/:id', (req, res) => {
 });
 
 app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
-  const { id } = req.params; // Obtén el ID de la reparación desde la URL
-  const { nuevoEstado } = req.body; // Obtén el nuevo estado desde el cuerpo de la solicitud
+  const { id } = req.params;
+  const { nuevoEstado, nuevoMovimiento } = req.body; // Asumiendo que también envías un nuevo movimiento
 
   fs.readFile(archivoDbPath, 'utf8', (err, data) => {
     if (err) {
@@ -280,35 +281,31 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
 
     try {
       let reparaciones = JSON.parse(data);
-      let reparacionEncontrada = false;
+      let reparacionIndex = reparaciones.findIndex(rep => rep.id === parseInt(id));
 
-      // Actualizar el estado de la reparación correspondiente
-      reparaciones = reparaciones.map(reparacion => {
-        if (reparacion.id === parseInt(id)) {
-          reparacionEncontrada = true;
-          return { ...reparacion, estado: nuevoEstado };
-        }
-        return reparacion;
-      });
+      if (reparacionIndex !== -1) {
+        reparaciones[reparacionIndex].estado = nuevoEstado;
+        // Asegúrate de que el campo movimientos exista y sea un array, luego agrega el nuevo movimiento
+        reparaciones[reparacionIndex].movimientos = reparaciones[reparacionIndex].movimientos || [];
+        reparaciones[reparacionIndex].movimientos.push(nuevoMovimiento);
 
-      if (!reparacionEncontrada) {
-        return res.status(404).send({ message: 'Reparación no encontrada' });
+        fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
+          if (err) {
+            console.error('Error escribiendo en el archivo de base de datos:', err);
+            return res.status(500).send({ message: 'Error al actualizar la reparación' });
+          }
+          res.send({ message: 'Reparación actualizada con éxito', reparacion: reparaciones[reparacionIndex] });
+        });
+      } else {
+        res.status(404).send({ message: 'Reparación no encontrada' });
       }
-
-      // Guardar las reparaciones actualizadas en el archivo JSON
-      fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
-        if (err) {
-          console.error('Error escribiendo en el archivo de base de datos:', err);
-          return res.status(500).send({ message: 'Error al actualizar la reparación' });
-        }
-        res.send(reparaciones); // Devuelve la lista actualizada de reparaciones
-      });
     } catch (error) {
       console.error('Error al analizar los datos de reparaciones:', error);
       res.status(500).send({ message: 'Error al procesar los datos de reparaciones' });
     }
   });
 });
+
 
 
 app.listen(PORT, () => {
