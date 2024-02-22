@@ -3,12 +3,61 @@ import axios from 'axios';
 
 const PasarPresupuesto = ({ volver }) => {
     const [reparaciones, setReparaciones] = useState([]);
+    const [archivoSeleccionado, setArchivoSeleccionado] = useState(null);
+
+    const handleFileChange = (event) => {
+        setArchivoSeleccionado(event.target.files[0]);
+    };
+
+    // Función para adjuntar el presupuesto
+    const adjuntarPresupuesto = async (id) => {
+        if (!archivoSeleccionado) {
+            alert("Por favor, selecciona un archivo para adjuntar.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('presupuesto', archivoSeleccionado);
+
+        try {
+            await axios.post('http://localhost:3000/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log('Presupuesto adjuntado con éxito');
+            // Aquí podrías actualizar el estado para reflejar que el presupuesto ha sido adjuntado
+        } catch (error) {
+            console.error('Error al adjuntar el presupuesto:', error);
+        }
+    };
+    const enviarPresupuesto = async (id, email) => {
+      try {
+          // Asumiendo que tienes un endpoint '/api/enviar-presupuesto' que acepta POST requests
+          const response = await axios.post('http://localhost:3000/api/enviar-presupuesto', {
+              id: id,
+              email: email,
+              // Puedes incluir más datos si es necesario
+          });
+  
+          if (response.status === 200) {
+              console.log('Presupuesto enviado con éxito a ' + email);
+              // Aquí puedes manejar la lógica post-envío, como actualizar el estado de la reparación
+          } else {
+              console.error('No se pudo enviar el presupuesto');
+              // Manejar errores, por ejemplo, mostrando un mensaje al usuario
+          }
+      } catch (error) {
+          console.error('Error al enviar el presupuesto:', error);
+          // Manejar errores de red, por ejemplo, mostrando un mensaje al usuario
+      }
+  };
+  
 
     useEffect(() => {
         const fetchReparaciones = async () => {
             try {
                 const response = await axios.get('http://localhost:3000/api/reparaciones/en_revision');
-                // Asumiendo que tu API devuelve un array de reparaciones
                 setReparaciones(response.data.map(rep => ({
                     ...rep,
                     presupuestoAdjunto: false // Inicialmente, ningún presupuesto está adjunto
@@ -21,21 +70,6 @@ const PasarPresupuesto = ({ volver }) => {
         fetchReparaciones();
     }, []);
 
-    // Simula la carga de un archivo PDF y la actualización del estado `presupuestoAdjunto`
-    const adjuntarPresupuesto = async (id) => {
-        console.log(`Adjuntando presupuesto para la reparación con ID ${id}`);
-        // Simula la carga de un archivo PDF. Aquí deberías integrar la lógica real para adjuntar el archivo.
-        // Por simplicidad, marcamos el presupuesto como adjunto en el estado local.
-        setReparaciones(reparaciones.map(rep => rep.id === id ? { ...rep, presupuestoAdjunto: true } : rep));
-    };
-
-    // Función para simular el envío del presupuesto por email
-    const enviarPresupuesto = async (id, email) => {
-        console.log(`Enviando presupuesto a ${email}`);
-        // Aquí deberías integrar la lógica real para enviar el presupuesto por email.
-        // Esta es una simulación.
-    };
-
     return (
         <div>
             <h2>Lista de reparaciones en revisión para presupuesto</h2>
@@ -44,7 +78,10 @@ const PasarPresupuesto = ({ volver }) => {
                     <li key={index}>
                         <span>{rep.nombre}</span> - <span>{rep.modeloBomba}</span> - <span>{rep.estado}</span>
                         {!rep.presupuestoAdjunto && (
-                            <button onClick={() => adjuntarPresupuesto(rep.id)}>Adjuntar Presupuesto</button>
+                            <>
+                                <input type="file" onChange={handleFileChange} />
+                                <button onClick={() => adjuntarPresupuesto(rep.id)}>Adjuntar Presupuesto</button>
+                            </>
                         )}
                         {rep.presupuestoAdjunto && (
                             <button onClick={() => enviarPresupuesto(rep.id, rep.email)}>Enviar Presupuesto</button>
@@ -58,5 +95,3 @@ const PasarPresupuesto = ({ volver }) => {
 };
 
 export default PasarPresupuesto;
-
-

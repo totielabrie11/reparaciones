@@ -1,13 +1,87 @@
 const express = require('express');
+const multer = require('multer');
+const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3000; // Asegúrate de que este puerto no entre en conflicto con el puerto de tu aplicación React
+const PORT = 3000;
 
-const allowedOrigins = ['http://localhost:3000','http://localhost:3001', 'http://localhost:3002']; // Asegúrate de no repetir el puerto
+// Crear el directorio para los documentos si no existe
+const documentsDirectory = path.join(__dirname, 'documents');
+fs.mkdirSync(documentsDirectory, { recursive: true });
+
+// Configuración de CORS
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Origen no permitido por CORS'));
+    }
+  },
+  optionsSuccessStatus: 200
+}));
+app.use(bodyParser.json());
+
+// Configuración de almacenamiento para Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, documentsDirectory);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage });
+
+// Ruta para cargar archivos
+app.post('/upload', upload.single('presupuesto'), (req, res) => {
+  if (req.file) {
+    console.log('Archivo recibido:', req.file);
+    res.send('Archivo subido con éxito');
+  } else {
+    res.send('Error al subir el archivo');
+  }
+});
+
+// Configuración de nodemailer (actualiza con tus datos reales)
+const transporter = nodemailer.createTransport({
+  host: 'smtp.example.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'tu@correo.com',
+    pass: 'tucontraseña'
+  }
+});
+
+// Endpoint para enviar el presupuesto
+app.post('/api/enviar-presupuesto', async (req, res) => {
+  const { id, email } = req.body;
+
+  // Configuración del correo electrónico
+  const mailOptions = {
+    from: 'tu@correo.com',
+    to: email,
+    subject: 'Presupuesto de reparación',
+    text: `Este es el presupuesto para la reparación con ID ${id}. Adjunto encontrarás el detalle del presupuesto.`
+    // Puedes agregar un adjunto si tienes el archivo del presupuesto disponible
+  };
+
+  try {
+    // Enviar el email
+    let info = await transporter.sendMail(mailOptions);
+    console.log('Email enviado: ' + info.response);
+    res.send({ message: 'Presupuesto enviado con éxito' });
+  } catch (error) {
+    console.error('Error al enviar el email:', error);
+    res.status(500).send({ message: 'Error al enviar el presupuesto' });
+  }
+});
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -20,8 +94,7 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-app.use(cors(corsOptions));
-app.use(bodyParser.json());
+
 
 // Define la ruta al archivo JSON
 const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
