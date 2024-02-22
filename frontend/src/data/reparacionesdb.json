@@ -50,9 +50,9 @@
     "tipoServicio": "garantia",
     "causa": "lo arranque y me tiro la casa abajo",
     "observaciones": "son re truchos",
-    "estado": "sin ingresar",
+    "estado": "en revisión",
     "movimientos": "",
-    "fechaIngreso": "sin fecha",
+    "fechaIngreso": "22-02-2024 08:47",
     "id": 3
   },
   {
@@ -68,9 +68,9 @@
     "tipoServicio": "garantia",
     "causa": "arreglame la bomba que nunca me funciono",
     "observaciones": "la mando desarmada",
-    "estado": "sin ingresar",
+    "estado": "en revisión",
     "movimientos": "",
-    "fechaIngreso": "sin fecha",
+    "fechaIngreso": "22-02-2024 08:47",
     "id": 4
   },
   {
@@ -86,9 +86,9 @@
     "tipoServicio": "revision",
     "causa": "revisame esta",
     "observaciones": "no anda no se por que",
-    "estado": "sin ingresar",
+    "estado": "en revisión",
     "movimientos": "",
-    "fechaIngreso": "sin fecha",
+    "fechaIngreso": "22-02-2024 11:51",
     "id": 5
   }
 ]
