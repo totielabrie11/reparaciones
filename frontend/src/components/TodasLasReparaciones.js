@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import VerDetalle from './VerDetalle';
 
-function TodasLasReparaciones({volver}) {
+// Suponiendo que tienes un componente VerDetalle para mostrar los detalles
+// import VerDetalle from './VerDetalle';
+
+function TodasLasReparaciones({ volver }) {
   const [reparaciones, setReparaciones] = useState([]);
+  const [reparacionSeleccionada, setReparacionSeleccionada] = useState(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -21,37 +26,36 @@ function TodasLasReparaciones({volver}) {
     fetchReparaciones();
   }, []);
 
+  const verDetalle = (reparacion) => {
+    setReparacionSeleccionada(reparacion);
+  };
+
   return (
     <div>
       <h2>Todas las Reparaciones</h2>
       {error && <p>Error: {error}</p>}
-      {reparaciones.length > 0 ? (
-        <ul>
-          {reparaciones.map((reparacion) => (
-              <li key={reparacion.id}>
-              <p>Tipo de entidad: {reparacion.tipoEntidad}</p>
-              <p>Nombre: {reparacion.nombre}</p>
-              <p>DNI/CUIT: {reparacion.dniCuit}</p>
-              <p>Domicilio: {reparacion.domicilio}</p>
-              <p>Email: {reparacion.email}</p>
-              <p>Teléfono: {reparacion.telefono}</p>
-              <p>Nombre de contacto: {reparacion.nombreContacto}</p>
-              <p>Modelo de bomba: {reparacion.modeloBomba}</p>
-              <p>Número de serie: {reparacion.numeroSerie || 'No especificado'}</p>
-              <p>Tipo de servicio: {reparacion.tipoServicio}</p>
-              <p>Causa: {reparacion.causa}</p>
-              <p>Observaciones: {reparacion.observaciones}</p>
-              <p>Estado: {reparacion.estado}</p>
-              <p>Movimientos: {Array.isArray(reparacion.movimientos) ? reparacion.movimientos.join(", ") : 'Ninguno'}</p>
-            </li>
-          ))}
-        </ul>
+      {reparacionSeleccionada ? (
+        <VerDetalle reparacion={reparacionSeleccionada} volver={() => setReparacionSeleccionada(null)} />
       ) : (
-        <p>No hay reparaciones registradas.</p>
+        <React.Fragment>
+          {reparaciones.length > 0 ? (
+            <ul>
+              {reparaciones.map((reparacion) => (
+                  <li key={reparacion.id}>
+                  <p>Nombre: {reparacion.nombre}</p>
+                  <button onClick={() => verDetalle(reparacion)}>Ver detalle</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No hay reparaciones registradas.</p>
+          )}
+          <button onClick={volver}>Volver a la vista principal</button>
+        </React.Fragment>
       )}
-      <button onClick={volver}>Volver</button> {/* Botón para volver */}
     </div>
   );
 }
 
 export default TodasLasReparaciones;
+
