@@ -24,6 +24,7 @@ const PasarPresupuesto = ({ volver }) => {
 
         const formData = new FormData();
         formData.append('presupuesto', archivoSeleccionado);
+        formData.append('reparacionId', id); // Asegúrate de enviar el ID de la reparación
 
         try {
             await axios.post('http://localhost:3000/upload', formData, {
@@ -33,7 +34,7 @@ const PasarPresupuesto = ({ volver }) => {
             });
 
             // Añadir comentario de presupuesto adjunto
-            const comentarioPresupuesto = `Presupuesto adjuntado el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString()}`;
+            const comentarioPresupuesto = `Presupuesto adjuntado y pendiente de aprobación, el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString()}`;
             reparacion.movimientos.push(comentarioPresupuesto);
 
             setMensajeExito(`Presupuesto adjuntado con éxito para la reparación "${reparacion.nombre}"`);
@@ -42,6 +43,7 @@ const PasarPresupuesto = ({ volver }) => {
             setReparaciones(reparaciones.map(rep => rep.id === id ? { ...rep, presupuestoAdjunto: true, movimientos: [...rep.movimientos, comentarioPresupuesto] } : rep));
         } catch (error) {
             console.error('Error al adjuntar el presupuesto:', error);
+            alert('Error al adjuntar el presupuesto, inténtalo de nuevo.');
         }
     };
 

@@ -39,10 +39,37 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Ruta para cargar archivos
+// Asumiendo que tienes configurado multer y el resto del servidor como en ejemplos anteriores
+
 app.post('/upload', upload.single('presupuesto'), (req, res) => {
   if (req.file) {
-    console.log('Archivo recibido:', req.file);
-    res.send('Archivo subido con éxito');
+    const reparacionId = req.body.reparacionId; // Asume que el ID de la reparación se envía en el cuerpo del formulario
+    const fechaActual = new Date();
+    const comentarioPresupuesto = `Presupuesto adjuntado el ${fechaActual.toLocaleDateString()} a las ${fechaActual.toLocaleTimeString()}`;
+
+    fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error al leer el archivo de base de datos:', err);
+        return res.status(500).send('Error al leer el archivo de base de datos');
+      }
+
+      let reparaciones = JSON.parse(data);
+      const index = reparaciones.findIndex(r => r.id === parseInt(reparacionId));
+      if (index !== -1) {
+        reparaciones[index].movimientos.push(comentarioPresupuesto);
+        // Aquí puedes cambiar el estado de la reparación si es necesario
+
+        fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', err => {
+          if (err) {
+            console.error('Error al escribir en el archivo de base de datos:', err);
+            return res.status(500).send('Error al actualizar el archivo de base de datos');
+          }
+          res.send('Presupuesto cargado y reparación actualizada con éxito');
+        });
+      } else {
+        res.status(404).send('Reparación no encontrada');
+      }
+    });
   } else {
     res.send('Error al subir el archivo');
   }
@@ -271,7 +298,10 @@ app.get('/api/reparaciones/:id', (req, res) => {
 
 app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
   const { id } = req.params;
-  const { nuevoEstado, nuevoMovimiento } = req.body; // Asumiendo que también envías un nuevo movimiento
+  const { nuevoEstado, nuevoMovimiento } = req.body;
+  const fechaActual = new Date();
+  const fechaFormateada = fechaActual.toLocaleDateString('es-ES');
+  const horaFormateada = fechaActual.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
   fs.readFile(archivoDbPath, 'utf8', (err, data) => {
     if (err) {
@@ -279,29 +309,25 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
       return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
     }
 
-    try {
-      let reparaciones = JSON.parse(data);
-      let reparacionIndex = reparaciones.findIndex(rep => rep.id === parseInt(id));
+    let reparaciones = JSON.parse(data);
+    let reparacionIndex = reparaciones.findIndex(rep => rep.id === parseInt(id));
 
-      if (reparacionIndex !== -1) {
-        reparaciones[reparacionIndex].estado = nuevoEstado;
-        // Asegúrate de que el campo movimientos exista y sea un array, luego agrega el nuevo movimiento
-        reparaciones[reparacionIndex].movimientos = reparaciones[reparacionIndex].movimientos || [];
-        reparaciones[reparacionIndex].movimientos.push(nuevoMovimiento);
+    if (reparacionIndex !== -1) {
+      reparaciones[reparacionIndex].estado = nuevoEstado;
+      // Modifica aquí para añadir fecha y hora al movimiento
+      let movimientoConFecha = `${nuevoMovimiento} el ${fechaFormateada} a las ${horaFormateada}.`;
+      reparaciones[reparacionIndex].movimientos = reparaciones[reparacionIndex].movimientos || [];
+      reparaciones[reparacionIndex].movimientos.push(movimientoConFecha);
 
-        fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
-          if (err) {
-            console.error('Error escribiendo en el archivo de base de datos:', err);
-            return res.status(500).send({ message: 'Error al actualizar la reparación' });
-          }
-          res.send({ message: 'Reparación actualizada con éxito', reparacion: reparaciones[reparacionIndex] });
-        });
-      } else {
-        res.status(404).send({ message: 'Reparación no encontrada' });
-      }
-    } catch (error) {
-      console.error('Error al analizar los datos de reparaciones:', error);
-      res.status(500).send({ message: 'Error al procesar los datos de reparaciones' });
+      fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
+        if (err) {
+          console.error('Error escribiendo en el archivo de base de datos:', err);
+          return res.status(500).send({ message: 'Error al actualizar la reparación' });
+        }
+        res.send({ message: 'Reparación actualizada con éxito', reparacion: reparaciones[reparacionIndex] });
+      });
+    } else {
+      res.status(404).send({ message: 'Reparación no encontrada' });
     }
   });
 });

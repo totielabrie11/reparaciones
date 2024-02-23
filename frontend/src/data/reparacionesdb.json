@@ -14,9 +14,11 @@
     "observaciones": "la envío desarmada",
     "estado": "en revisión",
     "movimientos": [
-      "La reparación Charly ha pasado a revisión."
+      "La reparación Charly ha pasado a revisión. el 23/2/2024 a las 12:23.",
+      "Presupuesto adjuntado el 23/2/2024 a las 12:23:39",
+      "Presupuesto adjuntado el 23/2/2024 a las 12:24:52"
     ],
-    "fechaIngreso": "23-02-2024 09:44",
+    "fechaIngreso": "23-02-2024 12:22",
     "id": 1
   },
   {
@@ -32,11 +34,9 @@
     "tipoServicio": "revision",
     "causa": "me dejo de chupar",
     "observaciones": "tiene rota una manguera",
-    "estado": "en revisión",
-    "movimientos": [
-      "La reparación juan ha pasado a revisión."
-    ],
-    "fechaIngreso": "23-02-2024 09:44",
+    "estado": "ingresada",
+    "movimientos": "",
+    "fechaIngreso": "23-02-2024 12:22",
     "id": 2
   },
   {
@@ -52,11 +52,9 @@
     "tipoServicio": "garantia",
     "causa": "lo arranque y me tiro la casa abajo",
     "observaciones": "son re truchos",
-    "estado": "en revisión",
-    "movimientos": [
-      "La reparación Pablo Ugarriz ha pasado a revisión."
-    ],
-    "fechaIngreso": "23-02-2024 09:44",
+    "estado": "ingresada",
+    "movimientos": "",
+    "fechaIngreso": "23-02-2024 12:22",
     "id": 3
   },
   {
@@ -72,11 +70,9 @@
     "tipoServicio": "garantia",
     "causa": "arreglame la bomba que nunca me funciono",
     "observaciones": "la mando desarmada",
-    "estado": "en revisión",
-    "movimientos": [
-      "La reparación totie ha pasado a revisión."
-    ],
-    "fechaIngreso": "23-02-2024 09:44",
+    "estado": "ingresada",
+    "movimientos": "",
+    "fechaIngreso": "23-02-2024 12:23",
     "id": 4
   },
   {
@@ -92,11 +88,9 @@
     "tipoServicio": "revision",
     "causa": "revisame esta",
     "observaciones": "no anda no se por que",
-    "estado": "en revisión",
-    "movimientos": [
-      "La reparación melanie ha pasado a revisión."
-    ],
-    "fechaIngreso": "23-02-2024 09:44",
+    "estado": "ingresada",
+    "movimientos": "",
+    "fechaIngreso": "23-02-2024 12:23",
     "id": 5
   }
 ]
