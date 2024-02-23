@@ -90,26 +90,31 @@ const PasarPresupuesto = ({ volver }) => {
 
     return (
         <div>
-            <h2>Lista de reparaciones en revisión para presupuesto</h2>
-            {mensajeExito && <p>{mensajeExito}</p>}
-            <ul>
-                {reparaciones.map((rep, index) => (
-                    <li key={index}>
-                        <span>{rep.nombre}</span> - <span>{rep.modeloBomba}</span> - <span>{rep.estado}</span>
-                        {!rep.presupuestoAdjunto && (
-                            <>
-                                <input type="file" onChange={handleFileChange} />
-                                <button onClick={() => adjuntarPresupuesto(rep.id)}>Adjuntar Presupuesto</button>
-                            </>
-                        )}
-                        {rep.presupuestoAdjunto && (
+        <h2>Lista de reparaciones en revisión para presupuesto</h2>
+        {mensajeExito && <p>{mensajeExito}</p>}
+        <ul>
+            {reparaciones.map((rep, index) => (
+                <li key={index}>
+                    <span>{rep.nombre}</span> - <span>{rep.modeloBomba}</span> - <span>{rep.estado}</span>
+                    {!rep.presupuestoAdjunto && (
+                        <>
+                            <input type="file" onChange={handleFileChange} />
+                            <button onClick={() => adjuntarPresupuesto(rep.id)}>Adjuntar Presupuesto</button>
+                        </>
+                    )}
+                    {rep.presupuestoAdjunto && (
+                        <>
                             <button onClick={() => enviarPresupuesto(rep.id, rep.email)}>Enviar Presupuesto</button>
-                        )}
-                    </li>
-                ))}
-            </ul>
-            <button onClick={volver}>Volver a la vista principal</button>
-        </div>
+                            {rep.archivoPresupuesto && (
+                                <a href={`http://localhost:3000/descargar/${rep.archivoPresupuesto}`} download>Descargar Presupuesto</a>
+                            )}
+                        </>
+                    )}
+                </li>
+            ))}
+        </ul>
+        <button onClick={volver}>Volver a la vista principal</button>
+    </div>
     );
 };
 

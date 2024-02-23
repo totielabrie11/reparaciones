@@ -9,17 +9,19 @@
     "nombreContacto": "cintia",
     "modeloBomba": "DVRII 2A",
     "numeroSerie": "",
-    "tipoServicio": "revision",
+    "tipoServicio": "sin ingresar",
     "causa": "la bomba no anda adecuadamente, hace mucho ruido",
     "observaciones": "la envío desarmada",
     "estado": "en revisión",
     "movimientos": [
-      "La reparación Charly ha pasado a revisión. el 23/2/2024 a las 12:23.",
-      "Presupuesto adjuntado el 23/2/2024 a las 12:23:39",
-      "Presupuesto adjuntado el 23/2/2024 a las 12:24:52"
+      "La reparación Charly ha pasado a revisión. el 23/2/2024 a las 13:27.",
+      "Presupuesto adjuntado el 23/2/2024 a las 13:27:34",
+      "Presupuesto adjuntado el 23/2/2024 a las 13:28:35",
+      "Presupuesto adjuntado el 23/2/2024 a las 13:38:48"
     ],
-    "fechaIngreso": "23-02-2024 12:22",
-    "id": 1
+    "id": 1,
+    "fechaIngreso": "23-02-2024 13:27",
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1708706328135.jpg"
   },
   {
     "tipoEntidad": "persona",
@@ -88,9 +90,35 @@
     "tipoServicio": "revision",
     "causa": "revisame esta",
     "observaciones": "no anda no se por que",
-    "estado": "ingresada",
-    "movimientos": "",
+    "estado": "en revisión",
+    "movimientos": [
+      "La reparación melanie ha pasado a revisión. el 23/2/2024 a las 13:19.",
+      "Presupuesto adjuntado el 23/2/2024 a las 13:20:38"
+    ],
     "fechaIngreso": "23-02-2024 12:23",
-    "id": 5
+    "id": 5,
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1708705237995.jpg"
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "leo",
+    "dniCuit": "37628079",
+    "domicilio": "alun lugar",
+    "email": "leo@leo.com.ar",
+    "telefono": "115151511515",
+    "nombreContacto": "leo",
+    "modeloBomba": "SUPERVAC",
+    "numeroSerie": "",
+    "tipoServicio": "revision",
+    "causa": "no anda",
+    "observaciones": "la envío sin un tornillo",
+    "estado": "en revisión",
+    "movimientos": [
+      "La reparación leo ha pasado a revisión. el 23/2/2024 a las 13:41.",
+      "Presupuesto adjuntado el 23/2/2024 a las 13:41:25"
+    ],
+    "fechaIngreso": "23-02-2024 13:40",
+    "id": 6,
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1708706477573.mp4"
   }
 ]

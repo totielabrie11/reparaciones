@@ -43,9 +43,10 @@ const upload = multer({ storage });
 
 app.post('/upload', upload.single('presupuesto'), (req, res) => {
   if (req.file) {
-    const reparacionId = req.body.reparacionId; // Asume que el ID de la reparación se envía en el cuerpo del formulario
+    const reparacionId = req.body.reparacionId; // Asegúrate de enviar 'reparacionId' junto con el archivo
     const fechaActual = new Date();
     const comentarioPresupuesto = `Presupuesto adjuntado el ${fechaActual.toLocaleDateString()} a las ${fechaActual.toLocaleTimeString()}`;
+    const archivoRuta = req.file.path; // Guarda la ruta del archivo subido
 
     fs.readFile(archivoDbPath, 'utf8', (err, data) => {
       if (err) {
@@ -57,14 +58,14 @@ app.post('/upload', upload.single('presupuesto'), (req, res) => {
       const index = reparaciones.findIndex(r => r.id === parseInt(reparacionId));
       if (index !== -1) {
         reparaciones[index].movimientos.push(comentarioPresupuesto);
-        // Aquí puedes cambiar el estado de la reparación si es necesario
+        reparaciones[index].archivoPresupuesto = archivoRuta; // Añade la ruta del archivo para referencia futura
 
         fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', err => {
           if (err) {
             console.error('Error al escribir en el archivo de base de datos:', err);
             return res.status(500).send('Error al actualizar el archivo de base de datos');
           }
-          res.send('Presupuesto cargado y reparación actualizada con éxito');
+          res.send({ message: 'Presupuesto cargado y reparación actualizada con éxito', archivoUrl: req.file.filename });
         });
       } else {
         res.status(404).send('Reparación no encontrada');
@@ -74,6 +75,19 @@ app.post('/upload', upload.single('presupuesto'), (req, res) => {
     res.send('Error al subir el archivo');
   }
 });
+
+app.get('/descargar/:nombreArchivo', (req, res) => {
+  const nombreArchivo = req.params.nombreArchivo;
+  const rutaArchivo = path.join( nombreArchivo);
+  res.download(rutaArchivo, nombreArchivo, (err) => {
+    if (err) {
+      // Maneja el error aquí.
+      res.status(500).send('Error al descargar el archivo: ' + err.message);
+    }
+  });
+});
+
+
 
 // Configuración de nodemailer (actualiza con tus datos reales)
 const transporter = nodemailer.createTransport({
