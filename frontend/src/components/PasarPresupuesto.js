@@ -4,15 +4,21 @@ import axios from 'axios';
 const PasarPresupuesto = ({ volver }) => {
     const [reparaciones, setReparaciones] = useState([]);
     const [archivoSeleccionado, setArchivoSeleccionado] = useState(null);
+    const [mensajeExito, setMensajeExito] = useState('');
 
     const handleFileChange = (event) => {
         setArchivoSeleccionado(event.target.files[0]);
     };
 
-    // Función para adjuntar el presupuesto
     const adjuntarPresupuesto = async (id) => {
         if (!archivoSeleccionado) {
             alert("Por favor, selecciona un archivo para adjuntar.");
+            return;
+        }
+
+        const reparacion = reparaciones.find(rep => rep.id === id);
+        if (!reparacion) {
+            console.error('Reparación no encontrada');
             return;
         }
 
@@ -25,42 +31,52 @@ const PasarPresupuesto = ({ volver }) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log('Presupuesto adjuntado con éxito');
-            // Aquí podrías actualizar el estado para reflejar que el presupuesto ha sido adjuntado
+
+            // Añadir comentario de presupuesto adjunto
+            const comentarioPresupuesto = `Presupuesto adjuntado el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString()}`;
+            reparacion.movimientos.push(comentarioPresupuesto);
+
+            setMensajeExito(`Presupuesto adjuntado con éxito para la reparación "${reparacion.nombre}"`);
+            setTimeout(() => setMensajeExito(''), 3000);
+
+            setReparaciones(reparaciones.map(rep => rep.id === id ? { ...rep, presupuestoAdjunto: true, movimientos: [...rep.movimientos, comentarioPresupuesto] } : rep));
         } catch (error) {
             console.error('Error al adjuntar el presupuesto:', error);
         }
     };
+
     const enviarPresupuesto = async (id, email) => {
-      try {
-          // Asumiendo que tienes un endpoint '/api/enviar-presupuesto' que acepta POST requests
-          const response = await axios.post('http://localhost:3000/api/enviar-presupuesto', {
-              id: id,
-              email: email,
-              // Puedes incluir más datos si es necesario
-          });
-  
-          if (response.status === 200) {
-              console.log('Presupuesto enviado con éxito a ' + email);
-              // Aquí puedes manejar la lógica post-envío, como actualizar el estado de la reparación
-          } else {
-              console.error('No se pudo enviar el presupuesto');
-              // Manejar errores, por ejemplo, mostrando un mensaje al usuario
-          }
-      } catch (error) {
-          console.error('Error al enviar el presupuesto:', error);
-          // Manejar errores de red, por ejemplo, mostrando un mensaje al usuario
-      }
-  };
-  
+        try {
+            const response = await axios.post('http://localhost:3000/api/enviar-presupuesto', {
+                id,
+                email,
+            });
+
+            if (response.status === 200) {
+                // Añadir comentario de presupuesto enviado
+                const comentarioEnviado = `Presupuesto enviado el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString()}`;
+                const reparacion = reparaciones.find(rep => rep.id === id);
+                reparacion.movimientos.push(comentarioEnviado);
+
+                alert(`Presupuesto enviado con éxito a ${email}`);
+                setReparaciones(reparaciones.map(rep => rep.id === id ? { ...rep, movimientos: [...rep.movimientos, comentarioEnviado] } : rep));
+            } else {
+                alert('No se pudo enviar el presupuesto');
+            }
+        } catch (error) {
+            console.error('Error al enviar el presupuesto:', error);
+            alert('Error al enviar el presupuesto, inténtalo de nuevo.');
+        }
+    };
 
     useEffect(() => {
         const fetchReparaciones = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/reparaciones/en_revision');
-                setReparaciones(response.data.map(rep => ({
+                const { data } = await axios.get('http://localhost:3000/api/reparaciones/en_revision');
+                setReparaciones(data.map(rep => ({
                     ...rep,
-                    presupuestoAdjunto: false // Inicialmente, ningún presupuesto está adjunto
+                    presupuestoAdjunto: false,
+                    movimientos: rep.movimientos || [] // Asegura que todos tengan el array movimientos
                 })));
             } catch (error) {
                 console.error('Error al obtener las reparaciones:', error);
@@ -73,6 +89,7 @@ const PasarPresupuesto = ({ volver }) => {
     return (
         <div>
             <h2>Lista de reparaciones en revisión para presupuesto</h2>
+            {mensajeExito && <p>{mensajeExito}</p>}
             <ul>
                 {reparaciones.map((rep, index) => (
                     <li key={index}>

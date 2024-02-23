@@ -14,9 +14,9 @@
     "observaciones": "la envío desarmada",
     "estado": "en revisión",
     "movimientos": [
-      "se encuentra en observacion"
+      "La reparación Charly ha pasado a revisión."
     ],
-    "fechaIngreso": "21-02-2024 13:26",
+    "fechaIngreso": "23-02-2024 09:44",
     "id": 1
   },
   {
@@ -33,8 +33,10 @@
     "causa": "me dejo de chupar",
     "observaciones": "tiene rota una manguera",
     "estado": "en revisión",
-    "movimientos": "",
-    "fechaIngreso": "21-02-2024 15:09",
+    "movimientos": [
+      "La reparación juan ha pasado a revisión."
+    ],
+    "fechaIngreso": "23-02-2024 09:44",
     "id": 2
   },
   {
@@ -51,8 +53,10 @@
     "causa": "lo arranque y me tiro la casa abajo",
     "observaciones": "son re truchos",
     "estado": "en revisión",
-    "movimientos": "",
-    "fechaIngreso": "22-02-2024 08:47",
+    "movimientos": [
+      "La reparación Pablo Ugarriz ha pasado a revisión."
+    ],
+    "fechaIngreso": "23-02-2024 09:44",
     "id": 3
   },
   {
@@ -69,8 +73,10 @@
     "causa": "arreglame la bomba que nunca me funciono",
     "observaciones": "la mando desarmada",
     "estado": "en revisión",
-    "movimientos": "",
-    "fechaIngreso": "22-02-2024 08:47",
+    "movimientos": [
+      "La reparación totie ha pasado a revisión."
+    ],
+    "fechaIngreso": "23-02-2024 09:44",
     "id": 4
   },
   {
@@ -90,7 +96,7 @@
     "movimientos": [
       "La reparación melanie ha pasado a revisión."
     ],
-    "fechaIngreso": "22-02-2024 14:51",
+    "fechaIngreso": "23-02-2024 09:44",
     "id": 5
   }
 ]
