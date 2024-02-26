@@ -1,24 +1,24 @@
 [
   {
     "tipoEntidad": "persona",
-    "nombre": "charly",
+    "nombre": "Charly",
     "dniCuit": "30796516",
     "domicilio": "cabo h vacca 335",
     "email": "martinezcarlosmanuel.1@gmail.com",
     "telefono": "1158235845",
-    "nombreContacto": "charly",
+    "nombreContacto": "pochi",
     "modeloBomba": "DVRII 1A",
-    "numeroSerie": "no lo se",
-    "tipoServicio": "revision",
-    "causa": "no funciona correctamente hace mucho ruido",
-    "observaciones": "no tengo instrumento para medir",
-    "estado": "en revisión",
+    "numeroSerie": "",
+    "tipoServicio": "garantia",
+    "causa": "la compre y no enciende",
+    "observaciones": "la envío en su caja original",
+    "estado": "sin ingresar",
+    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
     "movimientos": [
-      "La reparación charly ha pasado a revisión. el 26/2/2024 a las 15:09.",
-      "Presupuesto adjuntado el 26/2/2024 a las 15:09:58"
+      "La reparación Charly ha pasado a revisión. el 26/2/2024 a las 16:21.",
+      "Presupuesto adjuntado el 26/2/2024 a las 16:22:10"
     ],
-    "fechaIngreso": "26-02-2024 14:59",
-    "id": 1,
-    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1708970998227.jpg"
+    "fechaIngreso": "26-02-2024 16:20",
+    "id": 1
   }
 ]

@@ -57,15 +57,22 @@ app.post('/upload', upload.single('presupuesto'), (req, res) => {
       let reparaciones = JSON.parse(data);
       const index = reparaciones.findIndex(r => r.id === parseInt(reparacionId));
       if (index !== -1) {
+        reparaciones[index].accionesPendientes = "Presupuesto adjuntado y pendiente de aprobación";
         reparaciones[index].movimientos.push(comentarioPresupuesto);
         reparaciones[index].archivoPresupuesto = archivoRuta; // Añade la ruta del archivo para referencia futura
 
+        // Aquí guardamos los cambios y preparamos la respuesta
         fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', err => {
           if (err) {
             console.error('Error al escribir en el archivo de base de datos:', err);
             return res.status(500).send('Error al actualizar el archivo de base de datos');
           }
-          res.send({ message: 'Presupuesto cargado y reparación actualizada con éxito', archivoUrl: req.file.filename });
+          // Incluyendo el nombre en la respuesta
+          res.send({ 
+            message: 'Presupuesto cargado y reparación actualizada con éxito', 
+            archivoUrl: req.file.filename,
+            nombre: reparaciones[index].nombre // Asumiendo que la propiedad se llama 'nombre'
+          });
         });
       } else {
         res.status(404).send('Reparación no encontrada');
@@ -75,6 +82,7 @@ app.post('/upload', upload.single('presupuesto'), (req, res) => {
     res.send('Error al subir el archivo');
   }
 });
+
 
 app.get('/descargar/:nombreArchivo', (req, res) => {
   const nombreArchivo = req.params.nombreArchivo;
