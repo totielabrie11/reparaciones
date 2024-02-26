@@ -16,6 +16,7 @@ function IngresoReparacion({ volverAPrincipal }) {
     causa: '',
     observaciones: '',
     estado: 'sin ingresar',
+    accionesPendientes: "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
     movimientos: '',
     fechaIngreso: "sin fecha",
   });

@@ -266,9 +266,11 @@ app.post('/api/reparaciones/ingresar/:id', (req, res) => {
     let reparacionIndex = reparaciones.findIndex(rep => rep.id === parseInt(id));
 
     if (reparacionIndex !== -1) {
-      // Actualiza el estado de la reparación a 'ingresada' y agrega la fecha de ingreso
+      // Actualiza el estado de la reparación a 'ingresada', agrega la fecha de ingreso,
+      // y vacía el campo "accionesPendientes"
       reparaciones[reparacionIndex].estado = 'ingresada';
       reparaciones[reparacionIndex].fechaIngreso = fechaIngreso;
+      reparaciones[reparacionIndex].accionesPendientes = ""; // Vaciar "accionesPendientes"
 
       // Guarda el archivo actualizado
       fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
