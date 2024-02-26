@@ -32,10 +32,10 @@ function IngresoReparacion({ volverAPrincipal }) {
     }));
   };
 
-  const generarPDF = () => {
+  const generarPDF = (id) => {
     const doc = new jsPDF();
     doc.text("Ticket de Pre-Carga de Reparación", 10, 10);
-    doc.text(`ID identificacion unica para seguimiento: ${formData.id}`, 10, 20);
+    doc.text(`ID identificacion unica para seguimiento: ${id}`, 10, 20);
     doc.text(`Modelo de bomba: ${formData.modeloBomba}`, 10, 30);
     doc.text(`Nombre: ${formData.nombre}`, 10, 40);
     // Agrega más campos según necesites...
@@ -48,8 +48,8 @@ function IngresoReparacion({ volverAPrincipal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = 'http://localhost:3000/api/reparaciones'; // Asegúrate de que esta es la URL correcta de tu API
-
+    const url = 'http://localhost:3000/api/reparaciones';
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -58,22 +58,21 @@ function IngresoReparacion({ volverAPrincipal }) {
         },
         body: JSON.stringify(formData),
       });
-
+  
       const result = await response.json();
       if (response.ok) {
-        console.log(result.message); // Mensaje de éxito del servidor
-        generarPDF(); // Generar y descargar el PDF
-        volverAPrincipal(); // Manejar la navegación o limpiar el formulario como se desee
+        // Asumimos que el backend devuelve { id: XX } donde XX es el ID de la reparación
+        generarPDF(result.id); // Usamos el ID para generar el PDF
+        volverAPrincipal(); // O cualquier lógica de post-creación
       } else {
-        console.error(result.message); // Mensaje de error del servidor
-        // Manejar el error mostrando un mensaje al usuario en la UI
+        throw new Error(result.message || 'Error al crear la reparación');
       }
     } catch (error) {
-      console.error('Error al realizar la petición:', error);
-      // Manejar el error mostrando un mensaje al usuario en la UI
+      console.error('Error al realizar la petición:', error.message);
+      // Implementar manejo de errores en la UI
     }
-    
   };
+  
 
   const getCausaPlaceholder = () => {
     switch (formData.tipoServicio) {

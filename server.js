@@ -152,25 +152,26 @@ app.post('/api/reparaciones', (req, res) => {
   const nuevaReparacion = req.body;
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
 
-  fs.readFile(archivoDbPath, (err, data) => {
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+    const reparaciones = JSON.parse(data || '[]');
+    // Asigna un nuevo ID
+    const nuevoId = reparaciones.length > 0 ? Math.max(...reparaciones.map(r => r.id)) + 1 : 1;
+    nuevaReparacion.id = nuevoId;
+    reparaciones.push(nuevaReparacion);
+
+    fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', err => {
       if (err) {
-          return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+        return res.status(500).send({ message: 'Error al guardar la nueva reparación' });
       }
-      // Parsea el contenido actual del archivo a un array
-      const reparaciones = JSON.parse(data || '[]');
-      // Agrega un ID único a la nueva reparación
-      nuevaReparacion.id = reparaciones.length > 0 ? Math.max(...reparaciones.map(r => r.id)) + 1 : 1;
-      // Añade la nueva reparación al array
-      reparaciones.push(nuevaReparacion);
-      // Escribe el array actualizado de nuevo al archivo
-      fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
-          if (err) {
-              return res.status(500).send({ message: 'Error al guardar la nueva reparación' });
-          }
-          res.status(201).send({ message: 'Reparación agregada con éxito' });
-      });
+      // Devuelve el ID de la nueva reparación
+      res.status(201).json({ id: nuevoId });
+    });
   });
 });
+
 
 // Endpoint que devuelve todas las reparaciones
 app.get('/api/reparaciones/todas', (req, res) => {
