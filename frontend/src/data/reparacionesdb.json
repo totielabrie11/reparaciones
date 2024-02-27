@@ -46,5 +46,24 @@
     "fechaIngreso": "27-02-2024 14:17",
     "id": 2,
     "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709054289790.jpg"
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "Leonardo",
+    "dniCuit": "25020202",
+    "domicilio": "bosch",
+    "email": "leo@leo.com.ar",
+    "telefono": "151515",
+    "nombreContacto": "romina",
+    "modeloBomba": "Supervac",
+    "numeroSerie": "",
+    "tipoServicio": "garantia",
+    "causa": "no funciona correctamente",
+    "observaciones": "quiero que atiendan rapidamente",
+    "estado": "sin ingresar",
+    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
+    "movimientos": "",
+    "fechaIngreso": "sin fecha",
+    "id": 3
   }
 ]

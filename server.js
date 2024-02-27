@@ -7,6 +7,8 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
+app.use(cors());
+
 const PORT = 3000;
 
 // Crear el directorio para los documentos si no existe
@@ -395,7 +397,53 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
   });
 });
 
+// Configuración para los reclamos
+// Define la ruta al archivo JSON
+const archivoReclamosPath = path.join(__dirname, 'data', 'reclamosDb.json');
 
+// Verifica si el archivo ya existe
+if (!fs.existsSync(archivoReclamosPath)) {
+    // Si el archivo no existe, crea uno nuevo con un arreglo vacío como contenido inicial
+    fs.writeFileSync(archivoReclamosPath, JSON.stringify([]), 'utf8');
+    console.log('Archivo reclamosDb.json creado correctamente');
+}
+
+// Ruta para crear un nuevo reclamo
+app.post('/api/reclamos/crear', (req, res) => {
+    const { reparacionId, motivo } = req.body; // Asegura que se recibe tanto el ID como el motivo del reclamo
+
+    // Asegúrate de validar los datos de entrada aquí
+    if (!reparacionId || !motivo) {
+        return res.status(400).send('Datos incompletos para el reclamo');
+    }
+
+    const nuevoReclamo = {
+        id: Date.now(), // Genera un ID único para el reclamo, por ejemplo, usando el timestamp actual
+        reparacionId, // El ID de la reparación asociada al reclamo
+        motivo, // El motivo del reclamo
+        fecha: new Date().toISOString() // Opcional: registra la fecha de creación del reclamo
+    };
+
+    fs.readFile(archivoReclamosPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error al leer el archivo de reclamos:', err);
+            return res.status(500).send('Error al procesar su reclamo');
+        }
+
+        // Parsear los datos existentes y añadir el nuevo reclamo
+        const reclamos = JSON.parse(data);
+        reclamos.push(nuevoReclamo);
+
+        // Guardar la lista actualizada de reclamos
+        fs.writeFile(archivoReclamosPath, JSON.stringify(reclamos, null, 2), 'utf8', (err) => {
+            if (err) {
+                console.error('Error al guardar el reclamo:', err);
+                return res.status(500).send('Error al procesar su reclamo');
+            }
+            res.send({ mensaje: 'Reclamo creado con éxito', reclamoId: nuevoReclamo.id });
+        });
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT} `);
