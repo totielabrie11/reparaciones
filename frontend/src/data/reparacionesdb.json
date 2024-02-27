@@ -12,13 +12,39 @@
     "tipoServicio": "garantia",
     "causa": "la compre y no enciende",
     "observaciones": "la envío en su caja original",
-    "estado": "sin ingresar",
-    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
+    "estado": "declinada",
+    "accionesPendientes": "Presupuesto adjuntado y pendiente de aprobación",
     "movimientos": [
       "La reparación Charly ha pasado a revisión. el 26/2/2024 a las 16:21.",
-      "Presupuesto adjuntado el 26/2/2024 a las 16:22:10"
+      "Presupuesto adjuntado el 26/2/2024 a las 16:22:10",
+      "La reparación Charly ha pasado a revisión. el 27/2/2024 a las 13:09.",
+      "Presupuesto adjuntado el 27/2/2024 a las 13:09:34"
     ],
-    "fechaIngreso": "26-02-2024 16:20",
-    "id": 1
+    "fechaIngreso": "27-02-2024 13:09",
+    "id": 1,
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709050174504.jpg"
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "Rodrigo",
+    "dniCuit": "210202020",
+    "domicilio": "tigre",
+    "email": "rh@dosivac.com",
+    "telefono": "1515151515",
+    "nombreContacto": "leo",
+    "modeloBomba": "DVR6",
+    "numeroSerie": "151515",
+    "tipoServicio": "garantia",
+    "causa": "No se mueve el vacuometro o indicador de vacío ",
+    "observaciones": "la envío con caja original quiero la misma caja si tiene reparación o una unidad nueva.",
+    "estado": "en revisión",
+    "accionesPendientes": "Presupuesto adjuntado y pendiente de aprobación",
+    "movimientos": [
+      "La reparación Rodrigo ha pasado a revisión. el 27/2/2024 a las 14:17.",
+      "Presupuesto adjuntado el 27/2/2024 a las 14:18:09"
+    ],
+    "fechaIngreso": "27-02-2024 14:17",
+    "id": 2,
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709054289790.jpg"
   }
 ]
