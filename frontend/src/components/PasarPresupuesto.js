@@ -5,10 +5,32 @@ const PasarPresupuesto = ({ volver }) => {
     const [reparaciones, setReparaciones] = useState([]);
     const [archivoSeleccionado, setArchivoSeleccionado] = useState(null);
     const [mensajeExito, setMensajeExito] = useState('');
+    const [cargando, setCargando] = useState(false); // Agrega esta línea para manejar el estado de carga
 
     const handleFileChange = (event) => {
         setArchivoSeleccionado(event.target.files[0]);
     };
+
+useEffect(() => {
+        const fetchReparaciones = async () => {
+            setCargando(true); // Activa el estado de carga
+            try {
+                const { data } = await axios.get('http://localhost:3000/api/reparaciones/en_revision');
+                setReparaciones(data.map(rep => ({
+                    ...rep,
+                    presupuestoAdjunto: false,
+                    movimientos: rep.movimientos || [],
+                    accionesPendientes: rep.accionesPendientes || ""
+                })));
+            } catch (error) {
+                console.error('Error al obtener las reparaciones:', error);
+            } finally {
+                setCargando(false); // Desactiva el estado de carga
+            }
+        };
+
+        fetchReparaciones();
+    }, []);
 
     const adjuntarPresupuesto = async (id) => {
         if (!archivoSeleccionado) {
@@ -56,52 +78,51 @@ const PasarPresupuesto = ({ volver }) => {
         // La lógica para enviar presupuesto permanece igual.
     };
 
-    useEffect(() => {
-        const fetchReparaciones = async () => {
-            try {
-                const { data } = await axios.get('http://localhost:3000/api/reparaciones/en_revision');
-                setReparaciones(data.map(rep => ({
-                    ...rep,
-                    presupuestoAdjunto: false,
-                    movimientos: rep.movimientos || [],
-                    accionesPendientes: rep.accionesPendientes || ""
-                })));
-            } catch (error) {
-                console.error('Error al obtener las reparaciones:', error);
-            }
-        };
 
-        fetchReparaciones();
-    }, []);
-
-    return (
-        <div>
-            <h2>Lista de reparaciones en revisión para presupuesto</h2>
-            {mensajeExito && <p>{mensajeExito}</p>}
+return (
+    <div>
+        <h2>Lista de reparaciones en revisión para presupuesto</h2>
+        {mensajeExito && <div style={{ backgroundColor: "lightgreen", padding: "10px", marginBottom: "10px" }}>{mensajeExito}</div>}
+        
+        {cargando ? (
+            <p>Cargando reparaciones...</p>
+        ) : reparaciones.length > 0 ? (
             <ul>
                 {reparaciones.map((rep, index) => (
                     <li key={index}>
-                        <span>{rep.nombre}</span> - <span>{rep.modeloBomba}</span> - <span>{rep.estado}</span>
-                        {!rep.presupuestoAdjunto && (
-                            <>
-                                <input type="file" onChange={handleFileChange} />
-                                <button onClick={() => adjuntarPresupuesto(rep.id)}>Adjuntar Presupuesto</button>
-                            </>
-                        )}
-                        {rep.presupuestoAdjunto && (
-                            <>
-                                <button onClick={() => enviarPresupuesto(rep.id, rep.email)}>Enviar Presupuesto</button>
-                                {rep.archivoPresupuesto && (
-                                    <a href={`http://localhost:3000/descargar/${rep.archivoPresupuesto}`} download>Descargar Presupuesto</a>
-                                )}
-                            </>
-                        )}
+                        <div>
+                            <span><strong>ID:</strong> {rep.id}</span><br />
+                            <span><strong>Nombre:</strong> {rep.nombre}</span><br />
+                            <span><strong>Modelo de Bomba:</strong> {rep.modeloBomba}</span><br />
+                            <span><strong>Estado:</strong> {rep.estado}</span>
+                            {!rep.presupuestoAdjunto && (
+                                <>
+                                    <br />
+                                    <input type="file" onChange={handleFileChange} />
+                                    <button onClick={() => adjuntarPresupuesto(rep.id)}>Adjuntar Presupuesto</button>
+                                </>
+                            )}
+                            {rep.presupuestoAdjunto && (
+                                <>
+                                    <br />
+                                    <button onClick={() => enviarPresupuesto(rep.id, rep.email)}>Enviar Presupuesto</button>
+                                    {rep.archivoPresupuesto && (
+                                        <a href={`http://localhost:3000/descargar/${rep.archivoPresupuesto}`} download>Descargar Presupuesto</a>
+                                    )}
+                                </>
+                            )}
+                        </div>
                     </li>
                 ))}
             </ul>
-            <button onClick={volver}>Volver a la vista principal</button>
-        </div>
-    );
+        ) : (
+            <p>No hay reparaciones revisadas que puedan enviar presupuesto.</p>
+        )}
+
+        <button onClick={volver} style={{ marginTop: "20px" }}>Volver a la vista principal</button>
+    </div>
+);
+
 };
 
 export default PasarPresupuesto;
