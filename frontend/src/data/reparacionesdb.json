@@ -18,7 +18,10 @@
       "La reparación Charly ha pasado a revisión. el 26/2/2024 a las 16:21.",
       "Presupuesto adjuntado el 26/2/2024 a las 16:22:10",
       "La reparación Charly ha pasado a revisión. el 27/2/2024 a las 13:09.",
-      "Presupuesto adjuntado el 27/2/2024 a las 13:09:34"
+      "Presupuesto adjuntado el 27/2/2024 a las 13:09:34",
+      "Presupuesto aceptado el 29/2/2024 a las 12:17.",
+      "Presupuesto declinado el 29/2/2024 a las 12:31.",
+      "Presupuesto declinado el 29/2/2024 a las 12:43."
     ],
     "fechaIngreso": "27-02-2024 13:09",
     "id": 1,
@@ -37,15 +40,18 @@
     "tipoServicio": "garantia",
     "causa": "No se mueve el vacuometro o indicador de vacío ",
     "observaciones": "la envío con caja original quiero la misma caja si tiene reparación o una unidad nueva.",
-    "estado": "en revisión",
+    "estado": "finalizada",
     "accionesPendientes": "Presupuesto adjuntado y pendiente de aprobación",
     "movimientos": [
       "La reparación Rodrigo ha pasado a revisión. el 27/2/2024 a las 14:17.",
-      "Presupuesto adjuntado el 27/2/2024 a las 14:18:09"
+      "Presupuesto adjuntado el 27/2/2024 a las 14:18:09",
+      "Presupuesto adjuntado el 29/2/2024 a las 11:09:06",
+      "Presupuesto aceptado el 29/2/2024 a las 12:18.",
+      "Reparación finalizada el 29/2/2024 a las 12:54."
     ],
     "fechaIngreso": "27-02-2024 14:17",
     "id": 2,
-    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709054289790.jpg"
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709215746340.jpg"
   },
   {
     "tipoEntidad": "persona",
@@ -60,10 +66,16 @@
     "tipoServicio": "garantia",
     "causa": "no funciona correctamente",
     "observaciones": "quiero que atiendan rapidamente",
-    "estado": "sin ingresar",
-    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
-    "movimientos": "",
-    "fechaIngreso": "sin fecha",
-    "id": 3
+    "estado": "finalizada",
+    "accionesPendientes": "Presupuesto adjuntado y pendiente de aprobación",
+    "movimientos": [
+      "La reparación Leonardo ha pasado a revisión. el 29/2/2024 a las 12:21.",
+      "Presupuesto adjuntado el 29/2/2024 a las 12:21:31",
+      "Presupuesto aceptado el 29/2/2024 a las 12:21.",
+      "Reparación finalizada el 29/2/2024 a las 12:54."
+    ],
+    "fechaIngreso": "29-02-2024 12:21",
+    "id": 3,
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709220091678.jpg"
   }
 ]

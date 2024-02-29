@@ -5,37 +5,57 @@ function PresupuestosAceptados({ volver }) {
   const [reparacionesAprobadas, setReparacionesAprobadas] = useState([]);
   const [cargando, setCargando] = useState(false); // Estado para controlar la carga
 
-  useEffect(() => {
-    const fetchReparacionesAprobadas = async () => {
-      setCargando(true); // Inicia la carga
-      try {
-        const response = await axios.get('http://localhost:3000/api/reparaciones/aprobadas');
-        setReparacionesAprobadas(response.data);
-      } catch (error) {
-        console.error('Error al obtener las reparaciones aprobadas:', error);
-        // Manejar el error adecuadamente
-      } finally {
-        setCargando(false); // Finaliza la carga
-      }
-    };
+  // Mover la definición de fetchReparacionesAprobadas fuera del useEffect para que sea accesible globalmente en el componente
+  const fetchReparacionesAprobadas = async () => {
+    setCargando(true); // Inicia la carga
+    try {
+      const response = await axios.get('http://localhost:3000/api/reparaciones/aprobadas');
+      setReparacionesAprobadas(response.data);
+    } catch (error) {
+      console.error('Error al obtener las reparaciones aprobadas:', error);
+      // Manejar el error adecuadamente
+    } finally {
+      setCargando(false); // Finaliza la carga
+    }
+  };
 
-    fetchReparacionesAprobadas();
+  useEffect(() => {
+    fetchReparacionesAprobadas(); // Llama a la función dentro de useEffect
   }, []);
+
+  const handleFinalizar = async (id) => {
+    try {
+      const response = await axios.post(`http://localhost:3000/api/reparaciones/actualizarEstado/${id}`, {
+        nuevoEstado: 'finalizada',
+        nuevoMovimiento: 'Reparación finalizada',
+      });
+
+      if (response.status === 200) {
+        alert('La reparación ha sido marcada como finalizada con éxito.');
+        fetchReparacionesAprobadas(); // Ahora esta llamada es válida porque la función está definida en el ámbito correcto
+      } else {
+        alert('Hubo un problema al intentar finalizar la reparación.');
+      }
+    } catch (error) {
+      console.error('Error al finalizar la reparación:', error);
+      alert('Hubo un problema al intentar finalizar la reparación.');
+    }
+  };
 
   return (
     <div>
       <h2>Lista de Presupuestos Aceptados</h2>
       {cargando ? (
-        <p>Cargando reparaciones...</p> // Mostrar mensaje de carga o spinner
+        <p>Cargando reparaciones...</p>
       ) : reparacionesAprobadas.length > 0 ? (
         <ul>
-          {reparacionesAprobadas.map((reparacion, index) => (
-            <li key={index}>
+          {reparacionesAprobadas.map((reparacion) => (
+            <li key={reparacion.id}>
               <p>ID: {reparacion.id}</p>
               <p>Nombre: {reparacion.nombre}</p>
               <p>Modelo: {reparacion.modeloBomba}</p>
               <p>Estado: {reparacion.estado}</p>
-              {/* Agrega aquí más detalles de la reparación si es necesario */}
+              <button onClick={() => handleFinalizar(reparacion.id)}>Finalizada</button>
             </li>
           ))}
         </ul>
@@ -48,4 +68,6 @@ function PresupuestosAceptados({ volver }) {
 }
 
 export default PresupuestosAceptados;
+
+
 

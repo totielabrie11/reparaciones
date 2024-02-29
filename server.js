@@ -231,7 +231,7 @@ app.get('/api/reparaciones/aprobadas', (req, res) => {
     }
     try {
       const reparaciones = JSON.parse(data);
-      const reparacionesSinIngresar = reparaciones.filter(reparacion => reparacion.estado.toLowerCase() === "aprobada");
+      const reparacionesSinIngresar = reparaciones.filter(reparacion => reparacion.estado.toLowerCase() === "aceptada");
       res.json(reparacionesSinIngresar);
     } catch (error) {
       console.error('Could not parse JSON:', error);
@@ -383,6 +383,7 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
       let movimientoConFecha = `${nuevoMovimiento} el ${fechaFormateada} a las ${horaFormateada}.`;
       reparaciones[reparacionIndex].movimientos = reparaciones[reparacionIndex].movimientos || [];
       reparaciones[reparacionIndex].movimientos.push(movimientoConFecha);
+      reparaciones[reparacionIndex].estado = nuevoEstado;
 
       fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
         if (err) {
