@@ -6,7 +6,8 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
   const movimientosValidos = reparacion.movimientos || [];
   const downloadUrl = reparacion.archivoPresupuesto ? `http://localhost:3000/descargar/${encodeURIComponent(reparacion.archivoPresupuesto)}` : '#';
 
-  const accionesATomar = reparacion.accionesPendientes
+  const accionesATomar = reparacion.accionesPendientes || [];
+
 
   const mostrarBotonAcciones = accionesATomar.includes("Presupuesto adjuntado y pendiente de aprobación");
 
@@ -53,6 +54,7 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
         body: JSON.stringify({
           nuevoEstado: 'aceptada',
           nuevoMovimiento: 'Presupuesto aceptado',
+          nuevaAccion: 'Deberá aguardar a que finalice el proceso de reparación',
         }),
       });
   
@@ -89,6 +91,8 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
           body: JSON.stringify({
             nuevoEstado: 'declinada',
             nuevoMovimiento: 'Presupuesto declinado',
+            nuevaAccion: 'Debe pasar a retirar la reparación que se encuentra declinada',
+            
           }),
         });
   

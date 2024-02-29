@@ -28,6 +28,7 @@ function PresupuestosAceptados({ volver }) {
       const response = await axios.post(`http://localhost:3000/api/reparaciones/actualizarEstado/${id}`, {
         nuevoEstado: 'finalizada',
         nuevoMovimiento: 'Reparación finalizada',
+        nuevaAccion: 'Debe pasar a retirar la reparación que se encuentra terminada',
       });
 
       if (response.status === 200) {

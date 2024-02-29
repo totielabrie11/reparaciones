@@ -363,7 +363,7 @@ app.get('/api/reparaciones/:id', (req, res) => {
 
 app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
   const { id } = req.params;
-  const { nuevoEstado, nuevoMovimiento } = req.body;
+  const { nuevoEstado, nuevoMovimiento, nuevaAccion } = req.body;
   const fechaActual = new Date();
   const fechaFormateada = fechaActual.toLocaleDateString('es-ES');
   const horaFormateada = fechaActual.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
@@ -384,6 +384,7 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
       reparaciones[reparacionIndex].movimientos = reparaciones[reparacionIndex].movimientos || [];
       reparaciones[reparacionIndex].movimientos.push(movimientoConFecha);
       reparaciones[reparacionIndex].estado = nuevoEstado;
+      reparaciones[reparacionIndex].accionesPendientes = nuevaAccion;
 
       fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
         if (err) {
