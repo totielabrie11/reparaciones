@@ -35,34 +35,53 @@ function AceptarReparacion({ volver }) {
   }
 
   const ingresarReparacion = async (id) => {
-    try {
-      // Obtiene la fecha actual en formato ISO y la formatea
-      const fechaIngresoISO = new Date().toISOString();
-      const fechaIngresoFormateada = formatearFechaISO(fechaIngresoISO);
-      console.log("Enviando fecha formateada:", { fechaIngreso: fechaIngresoFormateada });
-
-
-      const url = `http://localhost:3000/api/reparaciones/ingresar/${id}`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // Asegúrate de enviar la fecha formateada
-        body: JSON.stringify({ fechaIngreso: fechaIngresoFormateada })
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al actualizar el estado de la reparación.');
+    // Muestra un prompt para que el administrador ingrese el número de palometa
+    const numeroPalometa = prompt("Ingrese número de palometa (6 dígitos):");
+  
+    // Verifica que el número ingresado sea válido (numérico y de 6 caracteres)
+    if (numeroPalometa && numeroPalometa.length === 6 && !isNaN(numeroPalometa)) {
+      // Si el número es válido, muestra un alert para confirmación
+      const confirmar = window.confirm(`Número ingresado: ${numeroPalometa}. ¿Es correcto?`);
+  
+      if (confirmar) {
+        try {
+          // Obtiene la fecha actual en formato ISO y la formatea
+          const fechaIngresoISO = new Date().toISOString();
+          const fechaIngresoFormateada = formatearFechaISO(fechaIngresoISO);
+          console.log("Enviando fecha formateada:", { fechaIngreso: fechaIngresoFormateada });
+  
+          const url = `http://localhost:3000/api/reparaciones/ingresar/${id}`;
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            // Asegúrate de enviar la fecha formateada y el IDpalometa
+            body: JSON.stringify({ fechaIngreso: fechaIngresoFormateada, IDpalometa: numeroPalometa })
+          });
+  
+          if (!response.ok) {
+            throw new Error('Error al actualizar el estado de la reparación.');
+          }
+  
+          // Actualiza la lista de reparaciones sin ingresar con la respuesta del servidor
+          const actualizadas = await response.json();
+          setReparacionesSinIngresar(actualizadas);
+  
+          alert('Reparación ingresada con éxito.');
+        } catch (error) {
+          setError('Error al ingresar la reparación: ' + error.message);
+        }
+      } else {
+        // Si el administrador declina la confirmación, puedes manejarlo aquí (opcional)
+        alert("Ingreso cancelado por el administrador.");
       }
-
-      // Actualiza la lista de reparaciones sin ingresar con la respuesta del servidor
-      const actualizadas = await response.json();
-      setReparacionesSinIngresar(actualizadas);
-    } catch (error) {
-      setError('Error al ingresar la reparación: ' + error.message);
+    } else {
+      // Si el número ingresado no es válido, muestra un mensaje de error
+      alert("Número de palometa inválido. Asegúrate de ingresar 6 dígitos numéricos.");
     }
   };
+  
 
   return (
     <div>

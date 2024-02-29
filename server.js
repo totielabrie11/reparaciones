@@ -298,10 +298,9 @@ app.get('/api/reparaciones/sinIngresar', (req, res) => {
   });
 });
 
-// Endpoint para ingresar una reparación (cambiar su estado a 'ingresada')
 app.post('/api/reparaciones/ingresar/:id', (req, res) => {
   const { id } = req.params;
-  const fechaIngreso = req.body.fechaIngreso;
+  const { fechaIngreso, IDpalometa } = req.body; // Recibe IDpalometa del cuerpo de la solicitud
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
   
   fs.readFile(archivoDbPath, 'utf8', (err, data) => {
@@ -314,20 +313,17 @@ app.post('/api/reparaciones/ingresar/:id', (req, res) => {
     let reparacionIndex = reparaciones.findIndex(rep => rep.id === parseInt(id));
 
     if (reparacionIndex !== -1) {
-      // Actualiza el estado de la reparación a 'ingresada', agrega la fecha de ingreso,
-      // y vacía el campo "accionesPendientes"
       reparaciones[reparacionIndex].estado = 'ingresada';
       reparaciones[reparacionIndex].fechaIngreso = fechaIngreso;
-      reparaciones[reparacionIndex].accionesPendientes = ""; // Vaciar "accionesPendientes"
+      reparaciones[reparacionIndex].accionesPendientes = "";
+      reparaciones[reparacionIndex].IDpalometa = IDpalometa; // Agrega IDpalometa al objeto de reparación
 
-      // Guarda el archivo actualizado
       fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
         if (err) {
           console.error(err);
           return res.status(500).send({ message: 'Error al actualizar el archivo de base de datos' });
         }
-        
-        // Vuelve a leer el archivo actualizado y envía las reparaciones sin ingresar
+
         fs.readFile(archivoDbPath, 'utf8', (err, updatedData) => {
           if (err) {
             console.error(err);

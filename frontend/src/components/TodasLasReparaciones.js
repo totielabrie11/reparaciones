@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import VerDetalle from './VerDetalle';
+import '../styles/card.css';
 
 // Suponiendo que tienes un componente VerDetalle para mostrar los detalles
 // import VerDetalle from './VerDetalle';
@@ -39,10 +40,11 @@ function TodasLasReparaciones({ volver }) {
       ) : (
         <React.Fragment>
           {reparaciones.length > 0 ? (
-            <ul>
+            <ul style={{ padding: 0 }}> {/* Elimina el padding por defecto de la lista */}
               {reparaciones.map((reparacion) => (
-                  <li key={reparacion.id}>
+                <li key={reparacion.id} className="card"> {/* Aplica la clase card */}
                   <p>Nombre: {reparacion.nombre}</p>
+                  <p>Estado: {reparacion.estado}</p>
                   <button onClick={() => verDetalle(reparacion)}>Ver detalle</button>
                 </li>
               ))}

@@ -40,8 +40,8 @@ function IngresoReparacion({ volverAPrincipal }) {
     doc.text(`Modelo de bomba: ${formData.modeloBomba}`, 10, 30);
     doc.text(`Nombre: ${formData.nombre}`, 10, 40);
     // Agrega más campos según necesites...
-    doc.text(`Observaciones: ${formData.causa}`, 10, 50);
-    doc.text(`Observaciones: ${formData.observaciones}`, 10, 60);
+    doc.text(`Causa: ${formData.causa}`, 10, 50);
+    doc.text(`Observaciones: ${formData.observaciones}`, 10, 70);
 
     // Guardar el PDF
     doc.save("ticket-reparacion.pdf");

@@ -12,15 +12,42 @@
     "tipoServicio": "revision",
     "causa": "no anda del todo bien , además hace mucho ruido.",
     "observaciones": "quiero factura A",
-    "estado": "aceptada",
+    "estado": "finalizada",
     "movimientos": [
       "La reparación Leonardo ha pasado a revisión. el 29/2/2024 a las 14:38.",
       "Presupuesto adjuntado el 29/2/2024 a las 14:39:00",
-      "Presupuesto aceptado el 29/2/2024 a las 14:39."
+      "Presupuesto aceptado el 29/2/2024 a las 14:39.",
+      "La reparación Leonardo ha pasado a revisión. el 29/2/2024 a las 15:36.",
+      "Presupuesto adjuntado el 29/2/2024 a las 15:36:16",
+      "Presupuesto declinado el 29/2/2024 a las 15:37.",
+      "La reparación Leonardo ha pasado a revisión. el 29/2/2024 a las 15:40.",
+      "Presupuesto adjuntado el 29/2/2024 a las 15:40:26",
+      "Presupuesto aceptado el 29/2/2024 a las 15:40.",
+      "Reparación finalizada el 29/2/2024 a las 15:41."
     ],
-    "fechaIngreso": "29-02-2024 14:24",
+    "fechaIngreso": "29-02-2024 15:40",
     "id": 1,
-    "accionesPendientes": "Deberá aguardar a que finalice el proceso de reparación",
-    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709228340845.jpg"
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709232026128.jpg",
+    "IDpalometa": "023564",
+    "accionesPendientes": "Debe pasar a retirar la reparación que se encuentra terminada"
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "Charly",
+    "dniCuit": "30796516",
+    "domicilio": "cabo h vacca 335",
+    "email": "martinezcarlosmanuel.1@gmail.com",
+    "telefono": "1158235845",
+    "nombreContacto": "cintia",
+    "modeloBomba": "DVRII 2A",
+    "numeroSerie": "",
+    "tipoServicio": "revision",
+    "causa": "se clavó totalmente no hace nadad",
+    "observaciones": "si no se puede reparar no la quiero devuelta",
+    "estado": "sin ingresar",
+    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
+    "movimientos": "",
+    "fechaIngreso": "sin fecha",
+    "id": 2
   }
 ]
