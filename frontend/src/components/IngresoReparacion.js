@@ -11,6 +11,7 @@ function IngresoReparacion({ volverAPrincipal }) {
     telefono: '',
     nombreContacto: '',
     modeloBomba: '',
+    opcionNumeroSerie: '',
     numeroSerie: '',
     tipoServicio: '',
     causa: '',
@@ -22,6 +23,7 @@ function IngresoReparacion({ volverAPrincipal }) {
   });
 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [mostrarInputNumeroSerie, setMostrarInputNumeroSerie] = useState(false);
 
   const handleMostrarFormulario = () => setMostrarFormulario(true);
 
@@ -165,13 +167,30 @@ function IngresoReparacion({ volverAPrincipal }) {
             required
           />
 
-          <input
-            type="text"
-            name="numeroSerie"
-            value={formData.numeroSerie}
-            onChange={handleChange}
-            placeholder="Número de serie (opcional)"
-          />
+          <select
+            name="opcionNumeroSerie"
+            value={formData.opcionNumeroSerie}
+            onChange={(e) => {
+              handleChange(e);
+              setMostrarInputNumeroSerie(e.target.value === "ingresar");
+            }}
+            required
+          >
+            <option value="">Seleccionar opción para número de serie</option>
+            <option value="noTiene">No tiene número de serie</option>
+            <option value="ingresar">Ingresar número de serie</option>
+          </select>
+
+          {mostrarInputNumeroSerie && (
+            <input
+              type="text"
+              name="numeroSerie"
+              value={formData.numeroSerie}
+              onChange={handleChange}
+              placeholder="Número de serie"
+            />
+          )}
+
 
           <select name="tipoServicio" value={formData.tipoServicio} onChange={handleChange} required>
             <option value="">Seleccionar servicio</option>

@@ -44,10 +44,33 @@
     "tipoServicio": "revision",
     "causa": "se clavó totalmente no hace nadad",
     "observaciones": "si no se puede reparar no la quiero devuelta",
-    "estado": "sin ingresar",
-    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
+    "estado": "en revisión",
+    "movimientos": [
+      "La reparación Charly ha pasado a revisión. el 1/3/2024 a las 14:50."
+    ],
+    "fechaIngreso": "01-03-2024 14:46",
+    "id": 2,
+    "IDpalometa": "023456"
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "Elamigos",
+    "dniCuit": "30796516",
+    "domicilio": "ahi",
+    "email": "maa@sds",
+    "telefono": "15151515",
+    "nombreContacto": "ese",
+    "modeloBomba": "Supervac",
+    "opcionNumeroSerie": "noTiene",
+    "numeroSerie": "",
+    "tipoServicio": "garantia",
+    "causa": "no funca",
+    "observaciones": "arreglala",
+    "estado": "ingresada",
+    "accionesPendientes": "",
     "movimientos": "",
-    "fechaIngreso": "sin fecha",
-    "id": 2
+    "fechaIngreso": "01-03-2024 14:46",
+    "id": 3,
+    "IDpalometa": "023458"
   }
 ]
