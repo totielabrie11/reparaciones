@@ -3,13 +3,20 @@ import '../styles/VistaLista.css';
 
 function ModificarEstados({ volver }) {
   const [reparaciones, setReparaciones] = useState([]);
+  const [cargando, setCargando] = useState(true); // Estado para manejar la carga de datos
 
   useEffect(() => {
+    setCargando(true); // Comenzar mostrando el indicador de carga
     fetch('http://localhost:3000/api/reparaciones/ingresadas')
       .then(response => response.json())
       .then(data => {
         const reparacionesIngresadas = data.filter(rep => rep.estado === 'ingresada');
         setReparaciones(reparacionesIngresadas);
+        setCargando(false); // Ocultar el indicador de carga una vez que los datos están listos
+      })
+      .catch(error => {
+        console.error('Error al obtener las reparaciones:', error);
+        setCargando(false); // Asegurarse de ocultar el indicador de carga incluso si hay un error
       });
   }, []);
 
@@ -56,20 +63,27 @@ function ModificarEstados({ volver }) {
   return (
     <div className="aceptar-reparacion">
       <h2>Reparaciones que ingresarán al circuito de reparaciones</h2>
-      <ul className="lista-reparaciones">
-        {reparaciones.map((rep, index) => (
-          <li key={index} className="reparacion-item">
-            <p>Nº Rep: {rep.IDpalometa}</p>
-            <p>Nombre: {rep.nombre}</p>
-            <p>Modelo de Bomba: {rep.modeloBomba}</p>
-            <p>Número de serie: {rep.numeroSerie}</p>
-            <p>Estado: {rep.estado}</p>
-            <button className="btn-ingresar" onClick={() => pasarARevision(rep)}>Pasar a revisión</button>
-          </li>
-        ))}
-      </ul>
+      {cargando ? (
+        <p>Cargando...</p> // Mostrar mensaje de carga mientras se cargan los datos
+      ) : reparaciones.length > 0 ? (
+        <ul className="lista-reparaciones">
+          {reparaciones.map((rep, index) => (
+            <li key={index} className="reparacion-item">
+              <p>Nº Rep: {rep.IDpalometa}</p>
+              <p>Nombre: {rep.nombre}</p>
+              <p>Modelo de Bomba: {rep.modeloBomba}</p>
+              <p>Número de serie: {rep.numeroSerie || 'No asignado'}</p>
+              <p>Estado: {rep.estado}</p>
+              <button className="btn-ingresar" onClick={() => pasarARevision(rep)}>Pasar a revisión</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No hay reparaciones pendientes a ingresar al circuito de reparación.</p> // Mostrar si no hay reparaciones
+      )}
       <button className="btn-volver" onClick={volver}>Volver a la vista principal</button>
     </div>
   );
+  
 }
 export default ModificarEstados;

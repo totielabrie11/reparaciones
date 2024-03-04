@@ -94,5 +94,31 @@
     "IDpalometa": "024659",
     "accionesPendientes": "Debe pasar a retirar la reparación que se encuentra terminada",
     "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709573800464.jpg"
+  },
+  {
+    "tipoEntidad": "razonSocial",
+    "nombre": "LARU",
+    "dniCuit": "Los alumnos de la refrigeracion unidos",
+    "domicilio": "en ese lugar turbina",
+    "email": "LARU@lospibe.com",
+    "telefono": "115823584584",
+    "nombreContacto": "El chapi",
+    "modeloBomba": "DVR6 antigua generacion",
+    "opcionNumeroSerie": "tiene",
+    "numeroSerie": "S24111",
+    "tipoServicio": "revision",
+    "causa": "mira se me cayó al piso y no enviende",
+    "observaciones": "la envío con un cable que es mio.",
+    "estado": "aceptada",
+    "movimientos": [
+      "Número de serie ingresado manualmente y reparación pasada a revisión. el 4/3/2024 a las 16:56.",
+      "Presupuesto adjuntado el 4/3/2024 a las 16:56:14",
+      "Presupuesto aceptado el 4/3/2024 a las 16:56."
+    ],
+    "fechaIngreso": "04-03-2024 16:55",
+    "id": 3,
+    "IDpalometa": "024111",
+    "accionesPendientes": "Deberá aguardar a que finalice el proceso de reparación",
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709582174233.jpg"
   }
 ]

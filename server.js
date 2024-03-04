@@ -157,6 +157,35 @@ if (!fs.existsSync(archivoDbPath)) {
     console.log('archivo reparacionesDb.json creado correctamente')
 }
 
+// Nuevo endpoint para buscar una reparación por ID o por IDpalometa
+app.get('/api/reparaciones/consultarBuscar', (req, res) => {
+  const { id, idPalometa } = req.query;
+  const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error al leer el archivo de base de datos:', err);
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+
+    const reparaciones = JSON.parse(data || '[]');
+    let reparacionEncontrada;
+
+    // Buscar por ID numérico o por IDpalometa
+    if (id) {
+      reparacionEncontrada = reparaciones.find(r => r.id === parseInt(id));
+    } else if (idPalometa) {
+      reparacionEncontrada = reparaciones.find(r => r.IDpalometa === idPalometa);
+    }
+
+    if (reparacionEncontrada) {
+      res.json(reparacionEncontrada);
+    } else {
+      res.status(404).send({ message: 'Reparación no encontrada' });
+    }
+  });
+});
+
 // Endpoint para agregar una nueva reparación
 app.post('/api/reparaciones', (req, res) => {
   const nuevaReparacion = req.body;
