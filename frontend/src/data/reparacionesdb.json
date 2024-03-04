@@ -13,7 +13,7 @@
     "tipoServicio": "garantia",
     "causa": "no anda",
     "observaciones": "no anda",
-    "estado": "aceptada",
+    "estado": "finalizada",
     "movimientos": [
       "Número de serie ingresado manualmente el 4/3/2024 a las 08:56.",
       "Número de serie ingresado manualmente y reparación pasada a revisión. el 4/3/2024 a las 09:01.",
@@ -51,13 +51,20 @@
       "La reparación Charly ha pasado a revisión. el 4/3/2024 a las 12:18.",
       "La reparación Charly ha pasado a revisión. el 4/3/2024 a las 12:18.",
       "Presupuesto adjuntado el 4/3/2024 a las 12:31:43",
-      "Presupuesto aceptado el 4/3/2024 a las 12:32."
+      "Presupuesto aceptado el 4/3/2024 a las 12:32.",
+      "Reparación finalizada el 4/3/2024 a las 14:04.",
+      "La reparación Charly ha pasado a revisión. el 4/3/2024 a las 14:06.",
+      "La reparación Charly ha pasado a revisión. el 4/3/2024 a las 14:18.",
+      "La reparación Charly ha pasado a revisión. el 4/3/2024 a las 14:35.",
+      "Presupuesto adjuntado el 4/3/2024 a las 14:36:32",
+      "Presupuesto aceptado el 4/3/2024 a las 14:36.",
+      "Reparación finalizada el 4/3/2024 a las 14:37."
     ],
-    "fechaIngreso": "04-03-2024 11:11",
+    "fechaIngreso": "04-03-2024 14:35",
     "id": 1,
-    "IDpalometa": "024658",
-    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709566303175.jpg",
-    "accionesPendientes": "Deberá aguardar a que finalice el proceso de reparación"
+    "IDpalometa": "023658",
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709573792755.jpg",
+    "accionesPendientes": "Debe pasar a retirar la reparación que se encuentra terminada"
   },
   {
     "tipoEntidad": "persona",
@@ -73,13 +80,19 @@
     "tipoServicio": "revision",
     "causa": "necesito que revisen por que no chupa bien",
     "observaciones": "yo si chupo bien la maquina no",
-    "estado": "en revisión",
+    "estado": "finalizada",
     "movimientos": [
       "Número de serie ingresado manualmente y reparación pasada a revisión. el 4/3/2024 a las 12:49.",
-      "La reparación cintia ha pasado a revisión. el 4/3/2024 a las 12:49."
+      "La reparación cintia ha pasado a revisión. el 4/3/2024 a las 12:49.",
+      "La reparación cintia ha pasado a revisión. el 4/3/2024 a las 14:06.",
+      "Presupuesto adjuntado el 4/3/2024 a las 14:36:40",
+      "Presupuesto aceptado el 4/3/2024 a las 14:37.",
+      "Reparación finalizada el 4/3/2024 a las 14:37."
     ],
     "fechaIngreso": "04-03-2024 12:49",
     "id": 2,
-    "IDpalometa": "024659"
+    "IDpalometa": "024659",
+    "accionesPendientes": "Debe pasar a retirar la reparación que se encuentra terminada",
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709573800464.jpg"
   }
 ]
