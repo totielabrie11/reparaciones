@@ -1,10 +1,59 @@
 /* styles.css */
+
 .form-login-derecha {
-    position: absolute;
-    right: 0;
-    top: 2%;
-    transform: translateY(-50%);
-    padding: 10px;
-    /* Añade más estilos aquí según necesites */
+  position: absolute;
+  right: 0;
+  top: 2%;
+  transform: translate(-10%, 0%);
+  padding: 20px;
+  background-color: #f0f0f0; /* Fondo ligero para el formulario */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  width: 300px; /* Ancho fijo para el formulario */
+  box-sizing: border-box; /* Asegura que padding no afecte el ancho total */
+}
+
+/* Ajustes al botón de cerrar sesión para posicionarlo arriba a la derecha */
+/* Asume que este estilo está dentro de tu archivo CSS vinculado al componente */
+
+/* Estilo para el botón de cerrar sesión */
+.btn-cerrar-sesion {
+  position: fixed;
+  top: 0;
+  margin-top: 17px;
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* Añade estas propiedades para controlar el tamaño */
+  max-width: 200px; /* o el máximo que prefieras */
+  white-space: nowrap; /* Evita que el texto se ajuste a la línea siguiente */
+  overflow: hidden; /* Oculta el contenido que se desborde del ancho máximo */
+  text-overflow: ellipsis; /* Añade puntos suspensivos si el texto se desborda */
+}
+
+/* Ajusta el diseño del contenedor de botones para que maneje mejor el espacio */
+.menu-botones {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea si no hay espacio */
+  justify-content: space-between; /* Distribuye el espacio alrededor de los elementos */
+  gap: 10px; /* Añade un espacio entre los elementos */
+}
+
+/* Utiliza media queries para hacer ajustes específicos basados en el tamaño de la pantalla */
+@media (max-width: 768px) {
+  .btn-cerrar-sesion {
+    width: 100%; /* Permite que el botón ocupe toda la anchura en pantallas pequeñas */
+    margin-bottom: 10px; /* Añade espacio abajo del botón para evitar que se pegue a otros elementos */
   }
-  
+}
+
+
+
+.btn-cerrar-sesion:hover {
+  background-color: #c9302c; /* Oscurece el botón al pasar el mouse para feedback visual */
+}

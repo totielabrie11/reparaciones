@@ -1,0 +1,84 @@
+/* vistaAdministrador.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    padding: 20px;
+    background-color: #fff;
+    margin: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+s
+
+.btn-cerrar-sesion:hover {
+    background-color: #c9302c;
+}
+
+/* Estilos para los botones del menú */
+.menu-boton {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-boton:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo de la vista actual */
+.vista-actual {
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones para alternar entre las vistas */
+.boton-vista {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+
+.boton-vista:hover {
+    background-color: #218838;
+}
+
+
+/* Nuevas clases para los botones de ModificarEstado */
+.boton-azul {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-azul:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,74 @@
+/* VistaLista.css */
+
+.aceptar-reparacion {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.lista-reparaciones {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reparacion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Asegúrate de que los elementos internos se distribuyan a lo largo */
+  background-color: #f2f2f2;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.reparacion-item div {
+  display: flex;
+  flex-direction: row; /* Elementos en fila para que se extiendan a lo largo */
+  align-items: center; /* Centrar los elementos verticalmente */
+  width: 100%; /* Asegúrate de que el div ocupe todo el ancho disponible */
+}
+
+.reparacion-item span {
+  margin-right: 10px; /* Espacio entre los spans */
+}
+
+.btn-ingresar {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-ingresar:hover {
+  background-color: #45a049;
+}
+
+.btn-volver {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block; /* Para que ocupe su propia línea */
+  margin-top: 20px;
+}
+
+.btn-volver:hover {
+  background-color: #5a6268;
+}
+
+/* Clases adicionales para errores o mensajes de éxito, si existen */
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.mensaje-exito {
+  background-color: lightgreen;
+  padding: 10px;
+  margin-bottom: 10px;
+}

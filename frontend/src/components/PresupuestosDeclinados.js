@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/VistaLista.css';
 
 function PresupuestosDeclinados({ volver }) {
   const [reparacionesDeclinadas, setReparacionesDeclinadas] = useState([]);
@@ -23,29 +24,28 @@ function PresupuestosDeclinados({ volver }) {
   }, []);
 
   return (
-    <div>
+    <div className="aceptar-reparacion">
       <h2>Lista de Presupuestos Declinados</h2>
       {cargando ? (
-        <p>Cargando reparaciones...</p> // Mostrar mensaje de carga o spinner
+        <p>Cargando reparaciones...</p>
       ) : reparacionesDeclinadas.length > 0 ? (
-        <ul>
-          {reparacionesDeclinadas.map((reparacion, index) => (
-            <li key={index}>
-              <p>ID: {reparacion.id}</p>
-              <p>Nombre: {reparacion.nombre}</p>
-              <p>Modelo: {reparacion.modeloBomba}</p>
-              <p>Estado: {reparacion.estado}</p>
+        <div className="lista-reparaciones">
+          {reparacionesDeclinadas.map((reparacion) => (
+            <div key={reparacion.id} className="reparacion-item">
+              <span>Rep Nº: {reparacion.IDpalometa}</span>
+              <span>Nombre: {reparacion.nombre}</span>
+              <span>Modelo: {reparacion.modeloBomba}</span>
+              <span>Estado: {reparacion.estado}</span>
               {/* Agrega aquí más detalles de la reparación si es necesario */}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p>No hay reparaciones declinadas.</p>
       )}
-      <button onClick={volver}>Volver a la vista principal</button>
+      <button onClick={volver} className="btn-volver">Volver a la vista principal</button>
     </div>
   );
-}
-
+};
 export default PresupuestosDeclinados;
 

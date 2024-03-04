@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/VistaLista.css';
 
 function PresupuestosAceptados({ volver }) {
   const [reparacionesAprobadas, setReparacionesAprobadas] = useState([]);
@@ -49,24 +50,25 @@ function PresupuestosAceptados({ volver }) {
       {cargando ? (
         <p>Cargando reparaciones...</p>
       ) : reparacionesAprobadas.length > 0 ? (
-        <ul>
+        <div className="lista-reparaciones"> {/* Utiliza div en lugar de ul para flex container */}
           {reparacionesAprobadas.map((reparacion) => (
-            <li key={reparacion.id}>
-              <p>ID: {reparacion.id}</p>
-              <p>Nombre: {reparacion.nombre}</p>
-              <p>Modelo: {reparacion.modeloBomba}</p>
-              <p>Estado: {reparacion.estado}</p>
-              <button onClick={() => handleFinalizar(reparacion.id)}>Finalizada</button>
-            </li>
+            <div key={reparacion.id} className="reparacion-item"> {/* Utiliza div en lugar de li y agrega la clase para los estilos */}
+              <span>Rep Nº: {reparacion.IDpalometa}</span>
+              <span>Nombre: {reparacion.nombre}</span>
+              <span>Modelo: {reparacion.modeloBomba}</span>
+              <span>Estado: {reparacion.estado}</span>
+              <button className="btn-ingresar" onClick={() => handleFinalizar(reparacion.id)}>Finalizada</button>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p>No hay reparaciones aprobadas.</p>
       )}
-      <button onClick={volver}>Volver a la vista principal</button>
+      <button onClick={volver} className="btn-volver">Volver a la vista principal</button>
     </div>
   );
 }
+
 
 export default PresupuestosAceptados;
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/VistaLista.css';
 
 function AceptarReparacion({ volver }) {
   const [reparacionesSinIngresar, setReparacionesSinIngresar] = useState([]);
@@ -84,24 +85,25 @@ function AceptarReparacion({ volver }) {
   
 
   return (
-    <div>
+    <div className="aceptar-reparacion">
       <h2>Reparaciones Sin Ingresar</h2>
-      {error && <p>Error: {error}</p>}
+      {error && <p className="error">Error: {error}</p>}
       {reparacionesSinIngresar.length > 0 ? (
-        <ul>
+        <ul className="lista-reparaciones">
           {reparacionesSinIngresar.map((reparacion) => (
-            <li key={reparacion.id}>
-              <p>Nombre: {reparacion.nombre}</p>
-              <p>Modelo de Bomba: {reparacion.modeloBomba}</p>
-              <p>Estado: {reparacion.estado}</p>
-              <button onClick={() => ingresarReparacion(reparacion.id)}>Ingresar</button>
+            <li key={reparacion.id} className="reparacion-item">
+              <p><strong>Nombre:</strong> {reparacion.nombre}</p>
+              <p><strong>Modelo de Bomba:</strong> {reparacion.modeloBomba}</p>
+              <p><strong>Número de serie:</strong> {reparacion.numeroSerie}</p>
+              <p><strong>Estado:</strong> {reparacion.estado}</p>
+              <button className="btn-ingresar" onClick={() => ingresarReparacion(reparacion.id)}>Ingresar</button>
             </li>
           ))}
         </ul>
       ) : (
         <p>No hay reparaciones sin ingresar.</p>
       )}
-      <button onClick={volver}>Volver a la vista principal</button>
+      <button className="btn-volver" onClick={volver}>Volver a la vista principal</button>
     </div>
   );
 }

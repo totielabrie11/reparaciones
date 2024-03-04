@@ -38,25 +38,26 @@ function TodasLasReparaciones({ volver }) {
       {reparacionSeleccionada ? (
         <VerDetalle reparacion={reparacionSeleccionada} volver={() => setReparacionSeleccionada(null)} />
       ) : (
-        <React.Fragment>
+        <>
           {reparaciones.length > 0 ? (
-            <ul style={{ padding: 0 }}> {/* Elimina el padding por defecto de la lista */}
-              {reparaciones.map((reparacion) => (
-                <li key={reparacion.id} className="card"> {/* Aplica la clase card */}
-                  <p>Nombre: {reparacion.nombre}</p>
-                  <p>Estado: {reparacion.estado}</p>
-                  <button onClick={() => verDetalle(reparacion)}>Ver detalle</button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No hay reparaciones registradas.</p>
-          )}
-          <button onClick={volver}>Volver a la vista principal</button>
-        </React.Fragment>
-      )}
-    </div>
-  );
+<div className="lista-reparaciones">
+{reparaciones.map((reparacion) => (
+<div key={reparacion.id} className="card">
+<p>Rep Nº: {reparacion.IDpalometa}</p>
+<p>Nombre: {reparacion.nombre}</p>
+<p>Estado: {reparacion.estado}</p>
+<button onClick={() => verDetalle(reparacion)}>Ver detalle</button>
+</div>
+))}
+</div>
+) : (
+<p>No hay reparaciones registradas.</p>
+)}
+<button onClick={volver} className="btn-volver">Volver a la vista principal</button>
+</>
+)}
+</div>
+);
 }
 
 export default TodasLasReparaciones;

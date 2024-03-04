@@ -359,7 +359,9 @@ app.get('/api/reparaciones/:id', (req, res) => {
 
 app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
   const { id } = req.params;
-  const { nuevoEstado, nuevoMovimiento, nuevaAccion } = req.body;
+  // Asegúrate de incluir opcionNumeroSerie junto a los otros campos que esperas del body
+  const { nuevoEstado, nuevoMovimiento, nuevaAccion, numeroSerie, opcionNumeroSerie } = req.body;
+
   const fechaActual = new Date();
   const fechaFormateada = fechaActual.toLocaleDateString('es-ES');
   const horaFormateada = fechaActual.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
@@ -375,12 +377,20 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
 
     if (reparacionIndex !== -1) {
       reparaciones[reparacionIndex].estado = nuevoEstado;
-      // Modifica aquí para añadir fecha y hora al movimiento
       let movimientoConFecha = `${nuevoMovimiento} el ${fechaFormateada} a las ${horaFormateada}.`;
       reparaciones[reparacionIndex].movimientos = reparaciones[reparacionIndex].movimientos || [];
       reparaciones[reparacionIndex].movimientos.push(movimientoConFecha);
-      reparaciones[reparacionIndex].estado = nuevoEstado;
       reparaciones[reparacionIndex].accionesPendientes = nuevaAccion;
+      
+      // Actualizar numeroSerie si se proporciona
+      if (numeroSerie) {
+        reparaciones[reparacionIndex].numeroSerie = numeroSerie;
+      }
+
+      // Actualizar opcionNumeroSerie si se proporciona
+      if (opcionNumeroSerie) {
+        reparaciones[reparacionIndex].opcionNumeroSerie = opcionNumeroSerie;
+      }
 
       fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
         if (err) {
@@ -394,6 +404,8 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
     }
   });
 });
+
+
 
 // Configuración para los reclamos
 // Define la ruta al archivo JSON

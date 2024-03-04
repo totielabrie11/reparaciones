@@ -79,51 +79,51 @@ useEffect(() => {
     };
 
 
-return (
-    <div>
-        <h2>Lista de reparaciones en revisión para presupuesto</h2>
-        {mensajeExito && <div style={{ backgroundColor: "lightgreen", padding: "10px", marginBottom: "10px" }}>{mensajeExito}</div>}
-        
-        {cargando ? (
-            <p>Cargando reparaciones...</p>
-        ) : reparaciones.length > 0 ? (
-            <ul>
-                {reparaciones.map((rep, index) => (
-                    <li key={index}>
-                        <div>
-                            <span><strong>ID:</strong> {rep.id}</span><br />
-                            <span><strong>Nombre:</strong> {rep.nombre}</span><br />
-                            <span><strong>Modelo de Bomba:</strong> {rep.modeloBomba}</span><br />
-                            <span><strong>Estado:</strong> {rep.estado}</span>
-                            {!rep.presupuestoAdjunto && (
-                                <>
-                                    <br />
-                                    <input type="file" onChange={handleFileChange} />
-                                    <button onClick={() => adjuntarPresupuesto(rep.id)}>Adjuntar Presupuesto</button>
-                                </>
-                            )}
-                            {rep.presupuestoAdjunto && (
-                                <>
-                                    <br />
-                                    <button onClick={() => enviarPresupuesto(rep.id, rep.email)}>Enviar Presupuesto</button>
-                                    {rep.archivoPresupuesto && (
-                                        <a href={`http://localhost:3000/descargar/${rep.archivoPresupuesto}`} download>Descargar Presupuesto</a>
-                                    )}
-                                </>
-                            )}
-                        </div>
-                    </li>
-                ))}
-            </ul>
-        ) : (
-            <p>No hay reparaciones revisadas que puedan enviar presupuesto.</p>
-        )}
+    return (
+        <div className="aceptar-reparacion">
+            <h2>Lista de reparaciones en revisión para presupuesto</h2>
+            {mensajeExito && <div className="mensaje-exito">{mensajeExito}</div>}
+            
+            {cargando ? (
+                <p>Cargando reparaciones...</p>
+            ) : reparaciones.length > 0 ? (
+                <ul className="lista-reparaciones">
+                    {reparaciones.map((rep, index) => (
+                        <li key={index} className="reparacion-item">
+                            <div>
+                                <span><strong>Rep Nº:</strong> {rep.IDpalometa}</span><br />
+                                <span><strong>Nombre:</strong> {rep.nombre}</span><br />
+                                <span><strong>Modelo de Bomba:</strong> {rep.modeloBomba}</span><br />
+                                <span><strong>Estado:</strong> {rep.estado}</span>
+                                {!rep.presupuestoAdjunto && (
+                                    <>
+                                        <br />
+                                        <input type="file" onChange={handleFileChange} />
+                                        <button className="btn-ingresar" onClick={() => adjuntarPresupuesto(rep.id)}>Adjuntar Presupuesto</button>
+                                    </>
+                                )}
+                                {rep.presupuestoAdjunto && (
+                                    <>
+                                        <br />
+                                        <button className="btn-ingresar" onClick={() => enviarPresupuesto(rep.id, rep.email)}>Enviar Presupuesto</button>
+                                        {rep.archivoPresupuesto && (
+                                            <a href={`http://localhost:3000/descargar/${rep.archivoPresupuesto}`} download className="btn-ingresar">Descargar Presupuesto</a>
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No hay reparaciones revisadas que puedan enviar presupuesto.</p>
+            )}
+    
+            <button onClick={volver} className="btn-volver">Volver a la vista principal</button>
+        </div>
+      );
+    }
 
-        <button onClick={volver} style={{ marginTop: "20px" }}>Volver a la vista principal</button>
-    </div>
-);
-
-};
 
 export default PasarPresupuesto;
 
