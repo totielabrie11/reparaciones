@@ -1,0 +1,53 @@
+.formulario-reparacion {
+    padding: 20px;
+    background-color: #f2f2f2; /* Ajusta este valor según tu paleta de colores */
+    border-radius: 5px;
+    max-width: 600px;
+    margin: auto; /* Centrar el formulario en la página */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .formulario-reparacion h2 {
+    text-align: center;
+    color: #333; /* Ajusta este valor según tu paleta de colores */
+  }
+  
+  .formulario-reparacion form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre elementos del formulario */
+  }
+  
+  .formulario-reparacion input,
+  .formulario-reparacion select,
+  .formulario-reparacion textarea {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc; /* Ajusta este valor según tu paleta de colores */
+    margin: 5px 0; /* Espacio arriba y abajo de cada elemento */
+  }
+  
+  .formulario-reparacion button {
+    background-color: #4CAF50; /* Verde, ajusta este valor según tu paleta de colores */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .formulario-reparacion button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos adicionales para botón de volver */
+  .formulario-reparacion .btn-volver {
+    background-color: #6c757d; /* Gris */
+    /* Resto de propiedades igual al botón principal */
+  }
+  
+  .formulario-reparacion .btn-volver:hover {
+    background-color: #5a6268;
+  }
+  

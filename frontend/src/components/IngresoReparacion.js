@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { jsPDF } from "jspdf";
+import '../styles/formularioReparacion.css';
 
 function IngresoReparacion({ volverAPrincipal }) {
   const [formData, setFormData] = useState({
@@ -89,7 +90,7 @@ function IngresoReparacion({ volverAPrincipal }) {
   };
 
   return (
-    <div>
+    <div className="formulario-reparacion">
       <h2>Ingresar una nueva reparación</h2>
       {!mostrarFormulario && (
         <button onClick={handleMostrarFormulario}>Aceptar</button>

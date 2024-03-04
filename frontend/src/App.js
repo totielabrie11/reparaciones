@@ -4,7 +4,9 @@ import ConsultaEstado from './components/ConsultaEstado';
 import IngresoReparacion from './components/IngresoReparacion';
 import DetalleReparacion from './components/DetalleReparacion';
 import VistaDistinta from './components/VistaDistinta'; 
+
 import './styles.css';
+
 
 function App() {
   const [usuarioLogueado, setUsuarioLogueado] = useState(null);
@@ -34,7 +36,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="vista-principal">
       <div>
         {vistaActual === 'principal' && (
           <>

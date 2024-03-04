@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/consultaReparacion.css';
 
 function ConsultaEstado({ setReparacionSeleccionada, volverAPrincipal }) {
   const [codigo, setCodigo] = useState('');
@@ -23,7 +24,7 @@ function ConsultaEstado({ setReparacionSeleccionada, volverAPrincipal }) {
   };
 
   return (
-    <div>
+    <div className="consulta-reparacion">
       <h2>Consultar estado de reparación</h2>
       <form onSubmit={handleSubmit}>
         <input

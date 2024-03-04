@@ -1,0 +1,38 @@
+/* Estilo general para la vista principal */
+.vista-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px; /* Añade espacio entre elementos */
+  }
+  
+  /* Estilos para los botones */
+  .vista-principal button {
+    background-color: #4CAF50; /* Verde, ajusta este valor según tu paleta de colores */
+    color: white;
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px; /* Ajusta esto según tus preferencias */
+    transition: background-color 0.3s ease;
+  }
+  
+  .vista-principal button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos para el mensaje de error, si existe */
+  .vista-principal .mensaje-error {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  /* Ajusta el estilo para el botón de volver a la vista principal si es necesario */
+  .vista-principal .btn-volver {
+    /* Añade estilos específicos para este botón aquí */
+  }
+  

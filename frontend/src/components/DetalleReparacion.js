@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from './Modal'; // Asegura que este componente está implementado correctamente
+import '../styles/consultaReparacion.css';
 
 function DetalleReparacion({ reparacion, cerrarDetalle }) {
   const [mostrarModal, setMostrarModal] = useState(false);
@@ -122,7 +123,7 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
   };
 
   return (
-    <div>
+    <div className="consulta-reparacion">
       <h2>Detalle de la Reparación</h2>
       <p>ID: {reparacion.id}</p>
       <p>Nombre: {reparacion.nombre}</p>

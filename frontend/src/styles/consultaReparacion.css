@@ -1,0 +1,70 @@
+.consulta-reparacion {
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .consulta-reparacion h2, .consulta-reparacion h3 {
+    color: #333;
+  }
+  
+  .consulta-reparacion form,
+  .consulta-reparacion div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .consulta-reparacion input,
+  .consulta-reparacion button,
+  .consulta-reparacion a {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+    text-decoration: none;
+  }
+  
+  .consulta-reparacion button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .consulta-reparacion button:hover {
+    background-color: #45a049;
+  }
+  
+  .consulta-reparacion p,
+  .consulta-reparacion li {
+    color: #333;
+  }
+  
+  .consulta-reparacion ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Estilos específicos para enlaces */
+  .consulta-reparacion a {
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .consulta-reparacion a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Estilos para el modal, si deseas personalizar */
+  .modal {
+    /* Tus estilos para el modal aquí */
+  }
+  
+  /* Estilos para mensajes de error o información */
+  .mensaje-error {
+    color: red;
+  }
+  
