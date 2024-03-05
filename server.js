@@ -352,7 +352,7 @@ app.get('/api/reparaciones/sinIngresar', (req, res) => {
 
 app.post('/api/reparaciones/ingresar/:id', (req, res) => {
   const { id } = req.params;
-  const { fechaIngreso, IDpalometa } = req.body; // Recibe IDpalometa del cuerpo de la solicitud
+  const { fechaIngreso, IDpalometa, nuevoMovimiento, accionesPendientes } = req.body; // Recibe IDpalometa del cuerpo de la solicitud
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
   
   fs.readFile(archivoDbPath, 'utf8', (err, data) => {
@@ -369,6 +369,8 @@ app.post('/api/reparaciones/ingresar/:id', (req, res) => {
       reparaciones[reparacionIndex].fechaIngreso = fechaIngreso;
       reparaciones[reparacionIndex].accionesPendientes = "";
       reparaciones[reparacionIndex].IDpalometa = IDpalometa; // Agrega IDpalometa al objeto de reparación
+      reparaciones[reparacionIndex].movimientos = nuevoMovimiento;
+      reparaciones[reparacionIndex].accionesPendientes = accionesPendientes;
 
       fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
         if (err) {
@@ -412,7 +414,6 @@ app.get('/api/reparaciones/:id', (req, res) => {
 // Endpoint para actualizar el estado de una reparación.
 app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
   const { id } = req.params;
-  // Asegúrate de incluir opcionNumeroSerie junto a los otros campos que esperas del body
   const { nuevoEstado, nuevoMovimiento, nuevaAccion, numeroSerie, opcionNumeroSerie } = req.body;
 
   const fechaActual = new Date();
@@ -430,17 +431,20 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
 
     if (reparacionIndex !== -1) {
       reparaciones[reparacionIndex].estado = nuevoEstado;
+      
+      // Asegurar que movimientos es siempre un array
+      if (!Array.isArray(reparaciones[reparacionIndex].movimientos)) {
+        reparaciones[reparacionIndex].movimientos = [];
+      }
+      
       let movimientoConFecha = `${nuevoMovimiento} el ${fechaFormateada} a las ${horaFormateada}.`;
-      reparaciones[reparacionIndex].movimientos = reparaciones[reparacionIndex].movimientos || [];
       reparaciones[reparacionIndex].movimientos.push(movimientoConFecha);
       reparaciones[reparacionIndex].accionesPendientes = nuevaAccion;
       
-      // Actualizar numeroSerie si se proporciona
       if (numeroSerie) {
         reparaciones[reparacionIndex].numeroSerie = numeroSerie;
       }
 
-      // Actualizar opcionNumeroSerie si se proporciona
       if (opcionNumeroSerie) {
         reparaciones[reparacionIndex].opcionNumeroSerie = opcionNumeroSerie;
       }
@@ -457,6 +461,7 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
     }
   });
 });
+
 
 
 // Configuración para los reclamos

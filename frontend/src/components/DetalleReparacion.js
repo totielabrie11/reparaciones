@@ -4,7 +4,7 @@ import '../styles/consultaReparacion.css';
 
 function DetalleReparacion({ reparacion, cerrarDetalle }) {
   const [mostrarModal, setMostrarModal] = useState(false);
-  const movimientosValidos = reparacion.movimientos || [];
+  const movimientosValidos = Array.isArray(reparacion.movimientos) ? reparacion.movimientos : [reparacion.movimientos];
   const downloadUrl = reparacion.archivoPresupuesto ? `http://localhost:3000/descargar/${encodeURIComponent(reparacion.archivoPresupuesto)}` : '#';
 
   const accionesATomar = reparacion.accionesPendientes || [];

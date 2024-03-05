@@ -50,7 +50,11 @@ function AceptarReparacion({ volver }) {
           const fechaIngresoISO = new Date().toISOString();
           const fechaIngresoFormateada = formatearFechaISO(fechaIngresoISO);
           console.log("Enviando fecha formateada:", { fechaIngreso: fechaIngresoFormateada });
-  
+          
+          const nuevoMovimiento = `Reparación fue ingresada en fecha ${fechaIngresoFormateada}`;
+          const accionesPendientes = "En espera a ser atendida por un técnico";
+
+
           const url = `http://localhost:3000/api/reparaciones/ingresar/${id}`;
           const response = await fetch(url, {
             method: 'POST',
@@ -58,7 +62,11 @@ function AceptarReparacion({ volver }) {
               'Content-Type': 'application/json',
             },
             // Asegúrate de enviar la fecha formateada y el IDpalometa
-            body: JSON.stringify({ fechaIngreso: fechaIngresoFormateada, IDpalometa: numeroPalometa })
+            body: JSON.stringify({ fechaIngreso: fechaIngresoFormateada,
+              IDpalometa: numeroPalometa,
+              nuevoMovimiento: nuevoMovimiento, // Enviar movimiento
+              accionesPendientes: accionesPendientes, 
+            })
           });
   
           if (!response.ok) {

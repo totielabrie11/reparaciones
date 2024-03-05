@@ -54,11 +54,24 @@ function ModificarEstados({ volver }) {
       if (!response.ok) {
         throw new Error('No se pudo actualizar el estado de la reparación.');
       }
-      setReparaciones(reparaciones.map(r => r.id === rep.id ? { ...r, estado: nuevoEstado, opcionNumeroSerie: opcionNumeroSerie, numeroSerie: numeroSerie } : r));
+  
+      // Asegurarse de que movimientos siempre sea tratado como un array
+      const movimientosActualizados = Array.isArray(rep.movimientos) ? rep.movimientos : [];
+      movimientosActualizados.push(nuevoMovimiento); // Ahora podemos estar seguros de que movimientos es un array
+  
+      // Actualizar la reparación en tu estado con los nuevos movimientos
+      setReparaciones(reparaciones.map(r => r.id === rep.id ? {
+        ...r,
+        estado: nuevoEstado,
+        opcionNumeroSerie: opcionNumeroSerie,
+        numeroSerie: numeroSerie,
+        movimientos: movimientosActualizados // Asignar el array de movimientos actualizado
+      } : r));
     } catch (error) {
       console.error('Error al actualizar el estado:', error);
     }
   };
+  
 
   return (
     <div className="aceptar-reparacion">

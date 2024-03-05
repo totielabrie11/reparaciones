@@ -27,7 +27,7 @@ function PendienteRetiro({ volver }) {
 
   // Función para marcar una reparación como entregada
   const marcarComoEntregada = async (id) => {
-    const nuevoMovimiento = `Reparación retirada`;
+    const nuevoMovimiento = `Reparación fue retirada`;
 
     const url = `http://localhost:3000/api/reparaciones/actualizarEstado/${id}`;
     try {
