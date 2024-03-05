@@ -18,7 +18,7 @@
 
 /* Estilo para el botón de cerrar sesión */
 .btn-cerrar-sesion {
-  position: fixed;
+  position: absolute;
   top: 0;
   margin-top: 17px;
   margin-left: 10px;

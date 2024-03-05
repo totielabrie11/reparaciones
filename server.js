@@ -231,6 +231,29 @@ app.get('/api/reparaciones/todas', (req, res) => {
   });
 });
 
+// Endpoint que devuelve reparaciones con estado "finalizada" o "declinada"
+app.get('/api/reparaciones/estado/finalizada-declinada', (req, res) => {
+  const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+    try {
+      const reparaciones = JSON.parse(data);
+      
+      // Filtrar reparaciones por estado "finalizada" o "declinada"
+      const reparacionesFiltradas = reparaciones.filter(rep => rep.estado === 'finalizada' || rep.estado === 'declinada');
+      
+      res.json(reparacionesFiltradas);
+    } catch (error) {
+      console.error('Could not parse JSON:', error);
+      res.status(500).send('Error al analizar los datos de reparaciones');
+    }
+  });
+});
+
+
 // Endpoint que devuelve las reparaciones que ya se encuentran en revision para presupuesto
 app.get('/api/reparaciones/en_revision', (req, res) => {
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
@@ -386,6 +409,7 @@ app.get('/api/reparaciones/:id', (req, res) => {
   }
 });
 
+// Endpoint para actualizar el estado de una reparación.
 app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
   const { id } = req.params;
   // Asegúrate de incluir opcionNumeroSerie junto a los otros campos que esperas del body
@@ -433,7 +457,6 @@ app.post('/api/reparaciones/actualizarEstado/:id', (req, res) => {
     }
   });
 });
-
 
 
 // Configuración para los reclamos
