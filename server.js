@@ -331,6 +331,38 @@ app.get('/api/reparaciones/ingresadas', (req, res) => {
   });
 });
 
+// Endpoint para verificar si un IDpalometa ya existe
+app.get('/api/reparaciones/verificarPalometa/:id', (req, res) => {
+  const idBuscado = req.params.id;
+
+  const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+  // Lee el archivo de reparaciones
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error leyendo el archivo de base de datos:', err);
+      return res.status(500).send({ mensaje: 'Error al leer el archivo de base de datos' });
+    }
+
+    try {
+      // Parsea el JSON
+      const reparaciones = JSON.parse(data);
+
+      // Busca el IDpalometa dentro del array de reparaciones
+      const existe = reparaciones.some(rep => rep.IDpalometa === idBuscado);
+
+      // Si el IDpalometa es vacío (y eso es permitido), o no existe, podemos continuar
+      if (idBuscado === '' || !existe) {
+        res.json({ existe: false });
+      } else {
+        res.json({ existe: true });
+      }
+    } catch (error) {
+      console.error('No se pudo analizar el JSON:', error);
+      res.status(500).send({ mensaje: 'Error al analizar los datos de reparaciones' });
+    }
+  });
+});
+
 // Endpoint que devuelve las reparaciones que no han sido ingresadas
 app.get('/api/reparaciones/sinIngresar', (req, res) => {
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');

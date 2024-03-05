@@ -96,11 +96,12 @@
       "undefined el 5/3/2024 a las 10:45.",
       "Reparación retirada el  el 5/3/2024 a las 11:08.",
       "Reparación retirada el 5/3/2024 a las 11:46.",
-      "Reparación fue retirada el 5/3/2024 a las 13:28."
+      "Reparación fue retirada el 5/3/2024 a las 13:28.",
+      "Reparación fue retirada el 5/3/2024 a las 16:06."
     ],
     "fechaIngreso": "04-03-2024 12:49",
     "id": 2,
-    "IDpalometa": "024659",
+    "IDpalometa": "024660",
     "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709573800464.jpg"
   },
   {
@@ -126,7 +127,8 @@
       "undefined el 5/3/2024 a las 10:33.",
       "undefined el 5/3/2024 a las 10:45.",
       "Reparación retirada  el 5/3/2024 a las 11:12.",
-      "Reparación retirada el 5/3/2024 a las 11:46."
+      "Reparación retirada el 5/3/2024 a las 11:46.",
+      "Reparación fue retirada el 5/3/2024 a las 16:07."
     ],
     "fechaIngreso": "04-03-2024 16:55",
     "id": 3,
@@ -157,7 +159,8 @@
       "Presupuesto adjuntado el 5/3/2024 a las 13:10:04",
       "Presupuesto aceptado el 5/3/2024 a las 13:10.",
       "Reparación finalizada el 5/3/2024 a las 13:11.",
-      "Reparación retirada el 5/3/2024 a las 13:11."
+      "Reparación retirada el 5/3/2024 a las 13:11.",
+      "Reparación fue retirada el 5/3/2024 a las 16:07."
     ],
     "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709655004008.jpg"
   },
@@ -175,16 +178,17 @@
     "tipoServicio": "revision",
     "causa": "no anda del todo bien o no dosifica la cantidad deseada , para que la puedan revisar completa",
     "observaciones": "bolsa negra ",
-    "estado": "declinada",
+    "estado": "retirada",
     "movimientos": [
       "La reparación Pablo ha pasado a revisión. el 5/3/2024 a las 14:06.",
       "Presupuesto adjuntado el 5/3/2024 a las 14:09:12",
-      "Presupuesto declinado el 5/3/2024 a las 14:11."
+      "Presupuesto declinado el 5/3/2024 a las 14:11.",
+      "Reparación fue retirada el 5/3/2024 a las 14:58.",
+      "Reparación fue retirada el 5/3/2024 a las 16:07."
     ],
     "fechaIngreso": "05-03-2024 14:06",
     "id": 5,
     "IDpalometa": "025897",
-    "accionesPendientes": "Debe pasar a retirar la reparación que se encuentra declinada",
     "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709658552806.jpg"
   },
   {
@@ -201,18 +205,19 @@
     "tipoServicio": "revision",
     "causa": "no anda del todo bien o no dosifica la cantidad deseada , para que la puedan revisar completa",
     "observaciones": "bolsa azul",
-    "estado": "finalizada",
+    "estado": "retirada",
     "movimientos": [
-      "La reparación Pepe ha pasado a revisión. el 5/3/2024 a las 14:06.",
-      "Presupuesto adjuntado el 5/3/2024 a las 14:09:11",
-      "Presupuesto aceptado el 5/3/2024 a las 14:11.",
-      "Reparación finalizada el 5/3/2024 a las 14:16."
+      "La reparación Pepe ha pasado a revisión. el 5/3/2024 a las 15:57.",
+      "Presupuesto adjuntado el 5/3/2024 a las 16:04:49",
+      "Presupuesto aceptado el 5/3/2024 a las 16:05.",
+      "Reparación finalizada el 5/3/2024 a las 16:05.",
+      "Reparación fue retirada el 5/3/2024 a las 16:05.",
+      "Reparación fue retirada el 5/3/2024 a las 16:07."
     ],
-    "fechaIngreso": "05-03-2024 14:06",
+    "fechaIngreso": "05-03-2024 15:51",
     "id": 6,
     "IDpalometa": "024985",
-    "accionesPendientes": "Debe pasar a retirar la reparación que se encuentra terminada",
-    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709658551247.jpg"
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709665489841.jpg"
   },
   {
     "tipoEntidad": "razonSocial",
@@ -234,12 +239,12 @@
       "La reparación Torrie ha pasado a revisión. el 5/3/2024 a las 14:07.",
       "Presupuesto adjuntado el 5/3/2024 a las 14:09:18",
       "Presupuesto aceptado el 5/3/2024 a las 14:12.",
-      "Reparación finalizada el 5/3/2024 a las 14:16."
+      "Reparación finalizada el 5/3/2024 a las 14:16.",
+      "Reparación fue retirada el 5/3/2024 a las 15:03."
     ],
     "fechaIngreso": "05-03-2024 14:07",
     "id": 7,
     "IDpalometa": "024987",
-    "accionesPendientes": "Debe pasar a retirar la reparación que se encuentra terminada",
     "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709658558701.jpg"
   },
   {
@@ -251,16 +256,23 @@
     "telefono": "1158235845",
     "nombreContacto": "pochi",
     "modeloBomba": "Supervac",
-    "opcionNumeroSerie": "noTiene",
-    "numeroSerie": "",
+    "opcionNumeroSerie": "tiene",
+    "numeroSerie": "S24659",
     "tipoServicio": "revision",
     "causa": "no anda del todo bien o no dosifica la cantidad deseada , para que la puedan revisar completa. zarpadooooooooooooooo",
     "observaciones": "no anda ni en pedooooooooooooooooooooooooooooooooooooooo",
-    "estado": "sin ingresar",
-    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
-    "movimientos": "",
-    "fechaIngreso": "sin fecha",
-    "id": 8
+    "estado": "finalizada",
+    "movimientos": [
+      "Número de serie ingresado manualmente y reparación pasada a revisión. el 5/3/2024 a las 15:06.",
+      "Presupuesto adjuntado el 5/3/2024 a las 15:07:10",
+      "Presupuesto aceptado el 5/3/2024 a las 15:56.",
+      "Reparación finalizada el 5/3/2024 a las 15:57.",
+      "Reparación fue retirada el 5/3/2024 a las 16:04."
+    ],
+    "fechaIngreso": "05-03-2024 15:04",
+    "id": 8,
+    "IDpalometa": "024659",
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709662030373.jpg"
   },
   {
     "tipoEntidad": "persona",
@@ -271,16 +283,22 @@
     "telefono": "1158235845",
     "nombreContacto": "pochi",
     "modeloBomba": "Supervac",
-    "opcionNumeroSerie": "noTiene",
-    "numeroSerie": "",
+    "opcionNumeroSerie": "tiene",
+    "numeroSerie": "S024677",
     "tipoServicio": "revision",
     "causa": "no anda del todo bien o no dosifica la cantidad deseada , para que la puedan revisar completa. zarpadooooooooooooooo",
     "observaciones": "no anda ni en pedooooooooooooooooooooooooooooooooooooooo",
-    "estado": "sin ingresar",
-    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
-    "movimientos": "",
-    "fechaIngreso": "sin fecha",
-    "id": 9
+    "estado": "finalizada",
+    "movimientos": [
+      "Número de serie ingresado manualmente y reparación pasada a revisión. el 5/3/2024 a las 15:06.",
+      "Presupuesto adjuntado el 5/3/2024 a las 15:07:14",
+      "Presupuesto declinado el 5/3/2024 a las 15:56.",
+      "Reparación fue retirada el 5/3/2024 a las 16:05."
+    ],
+    "fechaIngreso": "05-03-2024 15:05",
+    "id": 9,
+    "IDpalometa": "024677",
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709662034190.jpg"
   },
   {
     "tipoEntidad": "persona",
@@ -291,15 +309,22 @@
     "telefono": "1158235845",
     "nombreContacto": "pochi",
     "modeloBomba": "Supervac",
-    "opcionNumeroSerie": "noTiene",
-    "numeroSerie": "",
+    "opcionNumeroSerie": "tiene",
+    "numeroSerie": "S25878",
     "tipoServicio": "revision",
     "causa": "no anda del todo bien o no dosifica la cantidad deseada , para que la puedan revisar completa. zarpadooooooooooooooo",
     "observaciones": "no anda ni en pedooooooooooooooooooooooooooooooooooooooo",
-    "estado": "sin ingresar",
-    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
-    "movimientos": "",
-    "fechaIngreso": "sin fecha",
-    "id": 10
+    "estado": "finalizada",
+    "movimientos": [
+      "Número de serie ingresado manualmente y reparación pasada a revisión. el 5/3/2024 a las 15:06.",
+      "Presupuesto adjuntado el 5/3/2024 a las 15:07:17",
+      "Presupuesto aceptado el 5/3/2024 a las 15:57.",
+      "Reparación finalizada el 5/3/2024 a las 15:57.",
+      "Reparación fue retirada el 5/3/2024 a las 16:05."
+    ],
+    "fechaIngreso": "05-03-2024 15:05",
+    "id": 10,
+    "IDpalometa": "025878",
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1709662037951.jpg"
   }
 ]

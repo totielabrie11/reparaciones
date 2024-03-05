@@ -42,6 +42,21 @@ function AceptarReparacion({ volver }) {
     // Verifica que el número ingresado sea válido (numérico y de 6 caracteres)
     if (numeroPalometa && numeroPalometa.length === 6 && !isNaN(numeroPalometa)) {
       // Si el número es válido, muestra un alert para confirmación
+      const urlVerificar = `http://localhost:3000/api/reparaciones/verificarPalometa/${numeroPalometa}`;
+      try {
+        const respuestaVerificar = await fetch(urlVerificar);
+        const existePalometa = await respuestaVerificar.json();
+  
+        if (existePalometa.existe) {
+          alert("El número de palometa ingresado ya está en uso. Por favor, ingrese otro número.");
+          return; // Detiene la ejecución si el número de palometa ya existe
+        }
+      } catch (error) {
+        alert("Error al verificar el número de palometa. Intente nuevamente.");
+        return; // Detiene la ejecución si hay un error en la verificación
+      }
+  
+      
       const confirmar = window.confirm(`Número ingresado: ${numeroPalometa}. ¿Es correcto?`);
   
       if (confirmar) {

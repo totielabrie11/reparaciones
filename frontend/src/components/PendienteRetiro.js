@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/VistaLista.css';
 
-function PendienteRetiro({ volver }) {
+function PendienteRetiro({ volver, actualizarContadorRetirar }) {
   const [reparaciones, setReparaciones] = useState([]);
   const [cargando, setCargando] = useState(true);
 
@@ -12,6 +12,7 @@ function PendienteRetiro({ volver }) {
       .then(response => response.json())
       .then(data => {
         setReparaciones(data);
+        actualizarContadorRetirar(data.length); // Aquí se llama tras obtener los datos
         setCargando(false);
       })
       .catch(error => {
