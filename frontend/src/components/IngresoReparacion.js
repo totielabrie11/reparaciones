@@ -36,20 +36,41 @@ function IngresoReparacion({ volverAPrincipal }) {
     }));
   };
 
-  const generarPDF = (id) => {
+  const generarPDF = (id, formData) => {
     const doc = new jsPDF();
-    doc.text("Ticket de Pre-Carga de Reparación", 10, 10);
-    doc.text(`ID identificacion unica para seguimiento: ${id}`, 10, 20);
-    doc.text(`Modelo de bomba: ${formData.modeloBomba}`, 10, 30);
-    doc.text(`Nombre: ${formData.nombre}`, 10, 40);
-    // Agrega más campos según necesites...
-    doc.text(`Causa: ${formData.causa}`, 10, 50);
-    doc.text(`Observaciones: ${formData.observaciones}`, 10, 70);
-
+  
+    const anchoMaximo = 180; // Ancho máximo para el texto dentro de la página
+    const lineHeight = 7; // Altura de línea para el espaciado entre líneas
+  
+    let yPosition = 10; // Inicia en la posición Y 10 en la página
+  
+    // Título
+    doc.text("Ticket de Pre-Carga de Reparación", 10, yPosition);
+    yPosition += 10;
+  
+    // ID de seguimiento
+    doc.text(`ID identificacion unica para seguimiento: ${id}`, 10, yPosition);
+    yPosition += 10;
+  
+    // Resto de la información
+    doc.text(`Modelo de bomba: ${formData.modeloBomba}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Nombre: ${formData.nombre}`, 10, yPosition);
+    yPosition += 10;
+  
+    // Causa
+    const causa = doc.splitTextToSize(`Causa: ${formData.causa}`, anchoMaximo);
+    doc.text(causa, 10, yPosition);
+    yPosition += (lineHeight * causa.length) + 5; // Incrementa la posición Y según el número de líneas que ocupa la causa
+  
+    // Observaciones
+    const observaciones = doc.splitTextToSize(`Observaciones: ${formData.observaciones}`, anchoMaximo);
+    doc.text(observaciones, 10, yPosition);
+  
     // Guardar el PDF
     doc.save("ticket-reparacion.pdf");
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = 'http://localhost:3000/api/reparaciones';
@@ -66,7 +87,7 @@ function IngresoReparacion({ volverAPrincipal }) {
       const result = await response.json();
       if (response.ok) {
         // Asumimos que el backend devuelve { id: XX } donde XX es el ID de la reparación
-        generarPDF(result.id); // Usamos el ID para generar el PDF
+        generarPDF(result.id, formData); // Usamos el ID para generar el PDF
         volverAPrincipal(); // O cualquier lógica de post-creación
       } else {
         throw new Error(result.message || 'Error al crear la reparación');
