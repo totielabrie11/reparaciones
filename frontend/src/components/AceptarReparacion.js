@@ -23,6 +23,15 @@ function AceptarReparacion({ volver }) {
     fetchReparacionesSinIngresar();
   }, []);
 
+  const validarIDTiketEIngresarReparacion = async (reparacion) => {
+    const idTiketIngresado = prompt("Ingrese el IDTiket para poder ingresar la reparación:");
+    if (idTiketIngresado === reparacion.IDTicket) {
+      ingresarReparacion(reparacion.id);
+    } else {
+      alert("IDTiket inválido. No coincide con el IDTiket de la reparación seleccionada.");
+    }
+  };
+
   // Función para formatear la fecha ISO a un formato más legible
   function formatearFechaISO(fechaIso) {
     const fecha = new Date(fechaIso);
@@ -119,7 +128,9 @@ function AceptarReparacion({ volver }) {
               <p><strong>Modelo de Bomba:</strong> {reparacion.modeloBomba}</p>
               <p><strong>Número de serie:</strong> {reparacion.numeroSerie}</p>
               <p><strong>Estado:</strong> {reparacion.estado}</p>
-              <button className="btn-ingresar" onClick={() => ingresarReparacion(reparacion.id)}>Ingresar</button>
+              <button className="btn-ingresar" onClick={() => validarIDTiketEIngresarReparacion(reparacion)}>
+                Validar e Ingresar
+              </button>
             </li>
           ))}
         </ul>
