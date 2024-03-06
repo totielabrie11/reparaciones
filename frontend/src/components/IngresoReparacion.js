@@ -36,7 +36,7 @@ function IngresoReparacion({ volverAPrincipal }) {
     }));
   };
 
-  const generarPDF = (id, formData) => {
+  const generarPDF = (id, dataConIDTicket) => {
     const doc = new jsPDF();
   
     const anchoMaximo = 180; // Ancho máximo para el texto dentro de la página
@@ -52,27 +52,48 @@ function IngresoReparacion({ volverAPrincipal }) {
     doc.text(`ID identificacion unica para seguimiento: ${id}`, 10, yPosition);
     yPosition += 10;
   
-    // Resto de la información
-    doc.text(`Modelo de bomba: ${formData.modeloBomba}`, 10, yPosition);
+    // IDTiket de ingreso
+    doc.text(`IDTiket que permite ingresar la reparación: ${dataConIDTicket.IDTicket}`, 10, yPosition);
     yPosition += 10;
-    doc.text(`Nombre: ${formData.nombre}`, 10, yPosition);
+  
+    // Resto de la información
+    doc.text(`Modelo de bomba: ${dataConIDTicket.modeloBomba}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Nombre: ${dataConIDTicket.nombre}`, 10, yPosition);
     yPosition += 10;
   
     // Causa
-    const causa = doc.splitTextToSize(`Causa: ${formData.causa}`, anchoMaximo);
+    const causa = doc.splitTextToSize(`Causa: ${dataConIDTicket.causa}`, anchoMaximo);
     doc.text(causa, 10, yPosition);
     yPosition += (lineHeight * causa.length) + 5; // Incrementa la posición Y según el número de líneas que ocupa la causa
   
     // Observaciones
-    const observaciones = doc.splitTextToSize(`Observaciones: ${formData.observaciones}`, anchoMaximo);
+    const observaciones = doc.splitTextToSize(`Observaciones: ${dataConIDTicket.observaciones}`, anchoMaximo);
     doc.text(observaciones, 10, yPosition);
   
     // Guardar el PDF
     doc.save("ticket-reparacion.pdf");
   };
   
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+        // Función para generar un ID de ticket aleatorio
+    const generarIDTicket = () => {
+      const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const letraAleatoria = letras.charAt(Math.floor(Math.random() * letras.length));
+      const numerosAleatorios = Math.floor(1000 + Math.random() * 9000); // Genera un número de 4 dígitos
+      return letraAleatoria + numerosAleatorios;
+    };
+
+    // Agregar IDTicket al formData antes de enviar
+   generarIDTicket();
+    const dataConIDTicket = {
+      ...formData,
+      IDTicket: generarIDTicket(),
+    };
+
     const url = 'http://localhost:3000/api/reparaciones';
   
     try {
@@ -81,14 +102,13 @@ function IngresoReparacion({ volverAPrincipal }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataConIDTicket),
       });
   
       const result = await response.json();
       if (response.ok) {
-        // Asumimos que el backend devuelve { id: XX } donde XX es el ID de la reparación
-        generarPDF(result.id, formData); // Usamos el ID para generar el PDF
-        volverAPrincipal(); // O cualquier lógica de post-creación
+        generarPDF(result.id, dataConIDTicket); // Cambiado formData a dataConIDTicket
+        volverAPrincipal();  // O cualquier lógica de post-creación
       } else {
         throw new Error(result.message || 'Error al crear la reparación');
       }

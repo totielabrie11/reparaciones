@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback  } from 'react';
 import '../styles/VistaLista.css';
 
 function PendienteRetiro({ volver, actualizarContadorRetirar }) {
@@ -6,7 +6,7 @@ function PendienteRetiro({ volver, actualizarContadorRetirar }) {
   const [cargando, setCargando] = useState(true);
 
   // Función para cargar las reparaciones
-  const fetchReparaciones = () => {
+  const fetchReparaciones = useCallback(() => {
     setCargando(true);
     fetch('http://localhost:3000/api/reparaciones/estado/finalizada-declinada')
       .then(response => response.json())
@@ -19,12 +19,12 @@ function PendienteRetiro({ volver, actualizarContadorRetirar }) {
         console.error('Error al obtener las reparaciones:', error);
         setCargando(false);
       });
-  };
+  },[]); // Lista de dependencias vacía indica que la función no depende de ningún otro valor y no necesita recrearse
 
   // useEffect para cargar las reparaciones al montar el componente
   useEffect(() => {
     fetchReparaciones();
-  }, []);
+  }, [fetchReparaciones]);
 
   // Función para marcar una reparación como entregada
   const marcarComoEntregada = async (id) => {
@@ -74,7 +74,7 @@ function PendienteRetiro({ volver, actualizarContadorRetirar }) {
           ))}
         </ul>
       ) : (
-        <p>No hay reparaciones pendientes a retirar.</p>
+        <p>No hay reparaciones para entregar </p>
       )}
       {/* Botón para volver a la vista principal */}
       <button onClick={volver} className="btn-volver">Volver a la vista principal</button>
