@@ -15,6 +15,16 @@ const PORT = 3000;
 const documentsDirectory = path.join(__dirname, 'documents');
 fs.mkdirSync(documentsDirectory, { recursive: true });
 
+const ticketsDirectory = path.join(__dirname, 'documents', 'tickets');
+
+// Verifica si el directorio existe. Si no, lo crea.
+if (!fs.existsSync(ticketsDirectory)) {
+    fs.mkdirSync(ticketsDirectory, { recursive: true });
+    console.log('Directorio para tickets creado:', ticketsDirectory);
+} else {
+    console.log('Directorio para tickets ya existe:', ticketsDirectory);
+}
+
 // Configuración de CORS
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'];
 app.use(cors({
@@ -542,6 +552,37 @@ app.post('/api/reclamos/crear', (req, res) => {
             res.send({ mensaje: 'Reclamo creado con éxito', reclamoId: nuevoReclamo.id });
         });
     });
+});
+
+const uploadTicket = multer({ dest: 'documents/tickets/' });
+
+app.post('/api/generar-pdf', uploadTicket.single('pdf'), (req, res) => {
+  if (!req.file) {
+      return res.status(400).send('No se recibió el archivo');
+  }
+
+  // Construye la ruta completa al archivo
+  const filePath = `documents/tickets/ticket-reparacion-${req.file.filename}.pdf`;
+
+  // Cambia el nombre del archivo para incluir "ticket-reparacion"
+  fs.rename(req.file.path, filePath, function(err) {
+    if (err) {
+      console.error('Error al renombrar el archivo PDF:', err);
+      return res.status(500).send('Error al procesar el archivo PDF');
+    }
+
+    // Configura los encabezados para indicar el tipo de contenido
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=${req.file.filename}`);
+
+    // Envía el contenido del archivo PDF como respuesta
+    res.sendFile(filePath, { root: '.' }, function(err) {
+      if (err) {
+        console.error('Error al enviar el archivo PDF:', err);
+      }
+      // No eliminamos el archivo, ya que quieres conservarlo
+    });
+  });
 });
 
 app.listen(PORT, () => {

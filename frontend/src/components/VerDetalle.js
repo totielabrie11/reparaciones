@@ -10,6 +10,7 @@ function VerDetalle({ reparacion, volver }) {
       <p>Estado: {reparacion.estado}</p>
       <p>Fecha Ingreso: {reparacion.fechaIngreso}</p>
       <p>Detalle del problema: {reparacion.causa}</p>
+      <p>Mail: {reparacion.email}</p>
       <button onClick={volver}>Cerrar detalle</button>
     </div>
   );

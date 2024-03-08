@@ -36,9 +36,32 @@ function IngresoReparacion({ volverAPrincipal }) {
     }));
   };
 
-  const generarPDF = (id, dataConIDTicket) => {
+  const enviarPDFAlBackend = async (id, blob) => {
+    const formData = new FormData();
+    formData.append('pdf', blob, `ticket-reparacion-${id}.pdf`);
+    
+    try {
+        const response = await fetch('http://localhost:3000/api/generar-pdf', {
+            method: 'POST',
+            body: formData, // FormData se enviará con el Blob del PDF
+        });
+        if (response.ok && response.headers.get('Content-Type').includes('application/json')) {
+          const result = await response.json();
+          console.log(`PDF generado y guardado con éxito: ${result.filePath}`);
+      } else {
+          throw new Error('Respuesta no es JSON');
+      }
+        const result = await response.json();
+        console.log(`PDF generado y guardado con éxito: ${result.filePath}`);
+    } catch (error) {
+        console.error('Error al guardar el PDF:', error);
+    }
+};
+
+  const generarPDF = async (id, dataConIDTicket) => {
     const doc = new jsPDF();
-  
+    // Configura y agrega contenido al PDF aquí...
+
     const anchoMaximo = 180; // Ancho máximo para el texto dentro de la página
     const lineHeight = 7; // Altura de línea para el espaciado entre líneas
   
@@ -70,9 +93,16 @@ function IngresoReparacion({ volverAPrincipal }) {
     // Observaciones
     const observaciones = doc.splitTextToSize(`Observaciones: ${dataConIDTicket.observaciones}`, anchoMaximo);
     doc.text(observaciones, 10, yPosition);
-  
+    
+    // Ahora generamos el blob directamente desde jsPDF
+    const blob = doc.output('blob');
+      // Envía el Blob al backend
+      await enviarPDFAlBackend(id, blob);
+
     // Guardar el PDF
-    doc.save("ticket-reparacion.pdf");
+    enviarPDFAlBackend(id, blob);
+    const pdfUrl = URL.createObjectURL(blob);
+    window.open(pdfUrl, '_blank');
   };
   
   
