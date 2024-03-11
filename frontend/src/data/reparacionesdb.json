@@ -13,12 +13,13 @@
     "tipoServicio": "revision",
     "causa": "no anda",
     "observaciones": "no anda",
-    "estado": "finalizada",
+    "estado": "retirada",
     "movimientos": [
       "Número de serie ingresado manualmente y reparación pasada a revisión. el 8/3/2024 a las 11:46.",
       "Presupuesto adjuntado el 8/3/2024 a las 11:46:18",
       "Presupuesto declinado el 8/3/2024 a las 11:46.",
-      "Reparación fue retirada el 8/3/2024 a las 11:46."
+      "Reparación fue retirada el 8/3/2024 a las 11:46.",
+      "Reparación fue retirada el 11/3/2024 a las 15:26."
     ],
     "fechaIngreso": "08-03-2024 11:45",
     "IDTicket": "E2113",
@@ -40,13 +41,14 @@
     "tipoServicio": "revision",
     "causa": "no me está haciendo vacío aunque no tengo como medirlo. hace mucho ruido.",
     "observaciones": "la envío desarmada ya que intenté arreglarla.",
-    "estado": "finalizada",
+    "estado": "retirada",
     "movimientos": [
       "Número de serie ingresado manualmente y reparación pasada a revisión. el 8/3/2024 a las 11:41.",
       "Presupuesto adjuntado el 8/3/2024 a las 11:42:13",
       "Presupuesto aceptado el 8/3/2024 a las 11:43.",
       "Reparación finalizada el 8/3/2024 a las 11:44.",
-      "Reparación fue retirada el 8/3/2024 a las 11:46."
+      "Reparación fue retirada el 8/3/2024 a las 11:46.",
+      "Reparación fue retirada el 11/3/2024 a las 15:26."
     ],
     "fechaIngreso": "08-03-2024 11:39",
     "IDTicket": "Q1091",
@@ -68,14 +70,20 @@
     "tipoServicio": "revision",
     "causa": "no anda",
     "observaciones": "no anda",
-    "estado": "en revisión",
+    "estado": "retirada",
     "movimientos": [
-      "La reparación el mejor ha pasado a revisión. el 11/3/2024 a las 09:21."
+      "La reparación el mejor ha pasado a revisión. el 11/3/2024 a las 09:21.",
+      "Presupuesto adjuntado el 11/3/2024 a las 15:26:22",
+      "Presupuesto adjuntado el 11/3/2024 a las 15:26:57",
+      "Presupuesto aceptado el 11/3/2024 a las 15:27.",
+      "Reparación finalizada el 11/3/2024 a las 15:27.",
+      "Reparación fue retirada el 11/3/2024 a las 15:28."
     ],
     "fechaIngreso": "11-03-2024 09:21",
     "IDTicket": "U4717",
     "id": 4,
-    "IDpalometa": "024889"
+    "IDpalometa": "024889",
+    "archivoPresupuesto": "C:\\Users\\CarlosMartinez\\Desktop\\reparaciones\\documents\\presupuesto-1710181617345.jpg"
   },
   {
     "tipoEntidad": "razonSocial",
@@ -340,7 +348,14 @@
     "movimientos": "",
     "fechaIngreso": "sin fecha",
     "IDTicket": "F1811",
-    "id": 16
+    "id": 16,
+    "mensajes": [
+      {
+        "id": 1710179853718,
+        "contenido": "tienen idea que está pasando con mi reparación?",
+        "fecha": "2024-03-11T17:57:33.718Z"
+      }
+    ]
   },
   {
     "tipoEntidad": "persona",

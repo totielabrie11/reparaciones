@@ -196,6 +196,27 @@ app.get('/api/reparaciones/consultarBuscar', (req, res) => {
   });
 });
 
+// Endpoint que devuelve solo las reparaciones que tienen mensaje
+
+app.get('/api/reparaciones/mensajes', (req, res) => {
+  const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+  fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+    }
+    try {
+      const reparaciones = JSON.parse(data);
+      // Filtrar reparaciones que contienen mensajes
+      const reparacionesConMensajes = reparaciones.filter(reparacion => reparacion.mensajes && reparacion.mensajes.length > 0);
+      res.json(reparacionesConMensajes);
+    } catch (error) {
+      console.error('Could not parse JSON:', error);
+      res.status(500).send('Error al analizar los datos de reparaciones');
+    }
+  });
+});
+
 // Endpoint para agregar una nueva reparación
 app.post('/api/reparaciones', (req, res) => {
   const nuevaReparacion = req.body;

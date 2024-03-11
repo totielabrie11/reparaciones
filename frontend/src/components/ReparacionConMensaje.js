@@ -1,57 +1,74 @@
 import React, { useState, useEffect } from 'react';
-import Modal from './Modal'; // Asegúrate de que tienes un componente Modal
+import ModalMensaje from './ModalMensaje.js'; 
+import '../styles/card.css';
 
-function ListaReparacionesConMensajes() {
+function ListaReparacionesConMensajes( {volver} ) {
   const [reparaciones, setReparaciones] = useState([]);
   const [mensajeActivo, setMensajeActivo] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchReparacionesConMensajes = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/reparaciones/mensajes');
         if (!response.ok) {
-          throw new Error('Error al obtener las reparaciones con mensajes');
+          throw new Error('No se pudieron cargar las reparaciones con mensajes');
         }
         const data = await response.json();
         setReparaciones(data);
       } catch (error) {
         console.error('Error:', error);
+        setError(error.toString());
       }
     };
 
     fetchReparacionesConMensajes();
   }, []);
 
-  const verMensaje = (mensajes) => {
-    // Asumiendo que quieres ver el último mensaje de la lista
-    setMensajeActivo(mensajes[mensajes.length - 1]);
+  const verMensaje = (reparacion) => {
+    // Suponiendo que 'reparacion.mensajes' es un array de mensajes
+    const mensajeConDetalle = {
+      ...reparacion.mensajes[reparacion.mensajes.length - 1], // Obtener el último mensaje
+      nombreReparacion: reparacion.nombre // Incluir el nombre de la reparación
+    };
+    setMensajeActivo(mensajeConDetalle);
   };
 
   return (
-    <div>
+    <div className="lista-reparaciones">
       <h2>Reparaciones con Mensajes</h2>
+      {error && <p className="error-message">Error: {error}</p>}
       {reparaciones.length > 0 ? (
         <ul>
           {reparaciones.map((reparacion) => (
             <li key={reparacion.id}>
               <p><strong>ID Reparación:</strong> {reparacion.id}</p>
-              <button onClick={() => verMensaje(reparacion.mensajes)}>Ver Mensaje</button>
+              <p>Nombre: {reparacion.nombre}</p>
+              <p>Rep Nº: {reparacion.IDpalometa}</p>
+              <p>Estado: {reparacion.estado}</p>
+              {reparacion.mensajes && reparacion.mensajes.length > 0 && (
+                <button onClick={() => verMensaje(reparacion)}>Ver Mensaje</button>
+              )}
             </li>
           ))}
         </ul>
       ) : (
-        <p>No hay reparaciones con mensajes.</p>
+        !error && <p>No hay reparaciones con mensajes.</p>
       )}
-
+  
       {mensajeActivo && (
-        <Modal isOpen={Boolean(mensajeActivo)} onClose={() => setMensajeActivo(null)}>
-          <p><strong>Mensaje:</strong> {mensajeActivo.contenido}</p>
-          <p><strong>Fecha:</strong> {new Date(mensajeActivo.fecha).toLocaleString()}</p>
-        </Modal>
+        <ModalMensaje
+          mensaje={mensajeActivo}
+          isOpen={Boolean(mensajeActivo)}
+          onClose={() => setMensajeActivo(null)}
+        />
       )}
+      <button onClick={volver} className="btn-volver">Volver a la vista principal</button>
     </div>
   );
+  
 }
 
 export default ListaReparacionesConMensajes;
+
 
