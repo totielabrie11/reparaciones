@@ -19,6 +19,7 @@ function IngresoReparacion({ volverAPrincipal }) {
     causa: '',
     observaciones: '',
     estado: 'sin ingresar',
+    descargaTicket:'',
     accionesPendientes: "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
     movimientos: '',
     fechaIngreso: "sin fecha",
@@ -43,20 +44,26 @@ function IngresoReparacion({ volverAPrincipal }) {
     formData.append('pdf', blob, `ticket-reparacion-${id}.pdf`);
     
     try {
-        const response = await fetch('http://localhost:3000/api/generar-pdf', {
-            method: 'POST',
-            body: formData, // FormData se enviará con el Blob del PDF
-        });
-        if (response.ok && response.headers.get('Content-Type').includes('application/json')) {
-          const result = await response.json();
-          console.log(`PDF generado y guardado con éxito: ${result.filePath}`);
-      } else {
+      const response = await fetch('http://localhost:3000/api/generar-pdf', {
+          method: 'POST',
+          body: formData, // FormData se enviará con el Blob del PDF
+      });
+    
+      if (!response.ok) {
+          // Si la respuesta no es OK, lanzamos un error
+          throw new Error('La respuesta del servidor no fue OK');
+      }
+    
+      if (!response.headers.get('Content-Type').includes('application/json')) {
+          // Si la respuesta no es de tipo JSON, lanzamos un error
           throw new Error('Respuesta no es JSON');
       }
-        const result = await response.json();
-        console.log(`PDF generado y guardado con éxito: ${result.filePath}`);
+    
+      // Solo leemos el cuerpo de la respuesta una vez
+      const result = await response.json();
+      console.log(`PDF generado y guardado con éxito: ${result.filePath}`);
     } catch (error) {
-        console.error('Error al guardar el PDF:', error);
+      console.error('Error al guardar el PDF:', error);
     }
 };
 

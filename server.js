@@ -554,38 +554,67 @@ app.post('/api/reclamos/crear', (req, res) => {
     });
 });
 
-// Configuración de multer para guardar los archivos en un directorio temporal
+app.use(express.urlencoded({ extended: true }));
+app.use('/documents', express.static(path.join(__dirname, 'documents')));
+
 const uploadTicket = multer({ dest: 'tmp/' });
 
 app.post('/api/generar-pdf', uploadTicket.single('pdf'), (req, res) => {
   if (!req.file) {
     return res.status(400).send('No se recibió el archivo');
   }
-  
-  // Extraemos el ID del cuerpo de la solicitud
-  const id = req.body.id; // Asegúrate de que el ID se envíe desde el frontend
+
+  const id = req.body.id;
   if (!id) {
-    // Si no se encuentra el ID, se envía un mensaje de error
     return res.status(400).send('No se proporcionó el ID del ticket');
   }
 
-  // Ruta temporal donde multer guardó el archivo
   const tempPath = req.file.path;
-  // El nuevo nombre que queremos para el archivo, incluyendo el ID
   const newFilename = `ticket-reparacion-${id}.pdf`;
-  // Ruta final para el archivo renombrado
-  const finalPath = path.join('documents', 'tickets', newFilename);
+  const finalPath = path.join(__dirname, 'documents', 'tickets', newFilename);
+  const downloadPath = `/documents/tickets/${newFilename}`;
 
-  fs.rename(tempPath, finalPath, (err) => {
+  fs.rename(tempPath, finalPath, err => {
     if (err) {
       console.error('Error al renombrar el archivo PDF:', err);
       return res.status(500).send('Error al procesar el archivo PDF');
     }
 
-    // Aquí simplemente respondemos que el archivo se ha guardado correctamente
-    res.status(200).json({ message: 'Archivo guardado', filePath: finalPath });
+    const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
+    
+    fs.readFile(archivoDbPath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error al leer el archivo de base de datos:', err);
+        return res.status(500).send({ message: 'Error al leer el archivo de base de datos' });
+      }
+
+      const reparaciones = JSON.parse(data || '[]');
+      const reparacionIndex = reparaciones.findIndex(reparacion => reparacion.id === parseInt(id));
+
+      if (reparacionIndex !== -1) {
+        reparaciones[reparacionIndex].descargaTicket = downloadPath;
+        
+        fs.writeFile(archivoDbPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
+          if (err) {
+            console.error('Error al escribir en el archivo de base de datos:', err);
+            return res.status(500).send({ message: 'Error al actualizar el archivo de base de datos' });
+          }
+
+          res.status(200).json({
+            message: 'Archivo guardado con éxito y base de datos actualizada',
+            downloadLink: `http://localhost:3000${downloadPath}`
+          });
+        });
+      } else {
+        res.status(404).send({ message: 'Reparación no encontrada' });
+      }
+    });
   });
 });
+
+// ... Aquí irían otros endpoints y configuraciones de tu aplicación Express
+
+
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT} `);
