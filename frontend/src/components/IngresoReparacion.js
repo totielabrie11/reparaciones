@@ -8,6 +8,7 @@ function IngresoReparacion({ volverAPrincipal }) {
     nombre: '',
     dniCuit: '',
     domicilio: '',
+    provincia: '',
     email: '',
     telefono: '',
     nombreContacto: '',
@@ -191,7 +192,7 @@ function IngresoReparacion({ volverAPrincipal }) {
             name="nombre"
             value={formData.nombre}
             onChange={handleChange}
-            placeholder="Nombre"
+            placeholder="Nombre completo"
             required
           />
           <input
@@ -203,6 +204,14 @@ function IngresoReparacion({ volverAPrincipal }) {
             required
           />
 
+          <input
+            type="text"
+            name="provincia"
+            value={formData.provincia}
+            onChange={handleChange}
+            placeholder="Provincia"
+            required
+          />
           <input
             type="email"
             name="email"
