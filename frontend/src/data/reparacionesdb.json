@@ -364,5 +364,28 @@
     "fechaIngreso": "sin fecha",
     "IDTicket": "Q2629",
     "id": 17
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "Ekaterina obrahimovich",
+    "dniCuit": "3059878",
+    "domicilio": "santos lugares",
+    "provincia": "bsas",
+    "email": "algo@dsd",
+    "telefono": "1515151",
+    "nombreContacto": "Diego",
+    "modeloBomba": "Supervac",
+    "opcionNumeroSerie": "noTiene",
+    "numeroSerie": "",
+    "tipoServicio": "revision",
+    "causa": "no anda",
+    "observaciones": "no anda",
+    "estado": "sin ingresar",
+    "descargaTicket": "/documents/tickets/ticket-reparacion-18.pdf",
+    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
+    "movimientos": "",
+    "fechaIngreso": "sin fecha",
+    "IDTicket": "R9347",
+    "id": 18
   }
 ]
