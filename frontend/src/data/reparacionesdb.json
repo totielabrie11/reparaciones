@@ -363,7 +363,19 @@
     "movimientos": "",
     "fechaIngreso": "sin fecha",
     "IDTicket": "Q2629",
-    "id": 17
+    "id": 17,
+    "mensajes": [
+      {
+        "id": 1710173387060,
+        "contenido": "como tengo que hacer?",
+        "fecha": "2024-03-11T16:09:47.060Z"
+      },
+      {
+        "id": 1710174997358,
+        "contenido": "ya está locomia?",
+        "fecha": "2024-03-11T16:36:37.358Z"
+      }
+    ]
   },
   {
     "tipoEntidad": "persona",
@@ -386,6 +398,18 @@
     "movimientos": "",
     "fechaIngreso": "sin fecha",
     "IDTicket": "R9347",
-    "id": 18
+    "id": 18,
+    "mensajes": [
+      {
+        "id": 1710173258234,
+        "contenido": "hola",
+        "fecha": "2024-03-11T16:07:38.234Z"
+      },
+      {
+        "id": 1710173279977,
+        "contenido": "necesito respuesta",
+        "fecha": "2024-03-11T16:07:59.977Z"
+      }
+    ]
   }
 ]

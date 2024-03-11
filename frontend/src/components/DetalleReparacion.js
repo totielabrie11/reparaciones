@@ -39,10 +39,31 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
     }
   };
 
-  const enviarMensajeAdmin = (id) => {
-    alert(`Enviar mensaje al administrador para la reparación ID: ${id}`);
+  const enviarMensajeAdmin = async (id) => {
+    const mensaje = prompt("Por favor, ingrese su mensaje para el administrador:");
+    if (mensaje) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/mensajes/crear`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            reparacionId: id,
+            contenido: mensaje,
+          }),
+        });
+        if (response.ok) {
+          alert("Mensaje enviado con éxito.");
+        } else {
+          alert("Hubo un error al enviar el mensaje.");
+        }
+      } catch (error) {
+        console.error("Error al enviar el mensaje:", error);
+      }
+    }
   };
-
+  
   // Funciones para manejar las acciones del modal
   const handleAceptar = async () => {
     console.log('Aceptar');

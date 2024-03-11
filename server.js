@@ -554,6 +554,60 @@ app.post('/api/reclamos/crear', (req, res) => {
     });
 });
 
+// Definiendo la ruta al archivo JSON donde están las reparaciones
+const archivoReparacionesPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesdb.json');
+console.log("🚀 ~ archivoReparacionesPath:", archivoReparacionesPath)
+
+// Endpoint para añadir un mensaje a una reparación
+app.post('/api/mensajes/crear', (req, res) => {
+    const { reparacionId, contenido } = req.body;
+
+    if (!reparacionId || !contenido) {
+        return res.status(400).send('Datos incompletos para el mensaje');
+    }
+
+    // Leer el archivo de reparaciones
+    fs.readFile(archivoReparacionesPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error al leer el archivo de reparaciones:', err);
+            return res.status(500).send('Error al procesar su mensaje');
+        }
+
+        // Parsear los datos existentes y encontrar la reparación
+        const reparaciones = JSON.parse(data);
+        const reparacionIndex = reparaciones.findIndex(rep => rep.id === reparacionId);
+
+        // Si no se encuentra la reparación, enviar un error
+        if (reparacionIndex === -1) {
+            return res.status(404).send('Reparación no encontrada');
+        }
+
+        // Si no existe el array de mensajes, inicializarlo
+        if (!reparaciones[reparacionIndex].mensajes) {
+            reparaciones[reparacionIndex].mensajes = [];
+        }
+
+        // Añadir el nuevo mensaje
+        const nuevoMensaje = {
+            id: Date.now(), // ID único para el mensaje
+            contenido,
+            fecha: new Date().toISOString()
+        };
+        reparaciones[reparacionIndex].mensajes.push(nuevoMensaje);
+
+        // Guardar la lista actualizada de reparaciones
+        fs.writeFile(archivoReparacionesPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
+            if (err) {
+                console.error('Error al guardar los mensajes en la reparación:', err);
+                return res.status(500).send('Error al guardar su mensaje');
+            }
+            res.send({ mensaje: 'Mensaje añadido con éxito a la reparación', mensajeId: nuevoMensaje.id });
+        });
+    });
+});
+
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use('/documents', express.static(path.join(__dirname, 'documents')));
 

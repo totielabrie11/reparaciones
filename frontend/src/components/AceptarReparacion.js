@@ -3,6 +3,7 @@ import '../styles/VistaLista.css';
 
 function AceptarReparacion({ volver }) {
   const [reparacionesSinIngresar, setReparacionesSinIngresar] = useState([]);
+  const [filtro, setFiltro] = useState(''); // Estado para la cadena de búsqueda
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -22,6 +23,19 @@ function AceptarReparacion({ volver }) {
 
     fetchReparacionesSinIngresar();
   }, []);
+
+  // Función que maneja el cambio en el input de búsqueda
+  const handleSearchChange = (e) => {
+    setFiltro(e.target.value.toLowerCase());
+  };
+
+   // Lista filtrada de reparaciones, que incluye solo las que coincidan con el filtro de búsqueda
+  
+  const reparacionesFiltradas = filtro
+  ? reparacionesSinIngresar.filter((reparacion) =>
+      reparacion.nombre.toLowerCase().includes(filtro)
+    )
+  : reparacionesSinIngresar;
 
   const validarIDTiketEIngresarReparacion = async (reparacion) => {
     const idTiketIngresado = prompt("Ingrese el IDTiket para poder ingresar la reparación:");
@@ -120,9 +134,15 @@ function AceptarReparacion({ volver }) {
     <div className="aceptar-reparacion">
       <h2>Reparaciones Sin Ingresar</h2>
       {error && <p className="error">Error: {error}</p>}
-      {reparacionesSinIngresar.length > 0 ? (
+      <input
+        type="text"
+        placeholder="Buscar por nombre..."
+        onChange={handleSearchChange}
+        className="search-input"
+      />
+      {reparacionesFiltradas.length > 0 ? (
         <ul className="lista-reparaciones">
-          {reparacionesSinIngresar.map((reparacion) => (
+          {reparacionesFiltradas.map((reparacion) => (
             <li key={reparacion.id} className="reparacion-item">
               <p><strong>Nombre:</strong> {reparacion.nombre}</p>
               <p><strong>Modelo de Bomba:</strong> {reparacion.modeloBomba}</p>
@@ -135,11 +155,12 @@ function AceptarReparacion({ volver }) {
           ))}
         </ul>
       ) : (
-        <p>No hay reparaciones sin ingresar.</p>
+        <p>No hay reparaciones que coincidan con la búsqueda.</p>
       )}
       <button className="btn-volver" onClick={volver}>Volver a la vista principal</button>
     </div>
   );
+  
 }
 
 export default AceptarReparacion;

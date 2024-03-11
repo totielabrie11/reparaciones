@@ -4,6 +4,8 @@ import AceptarReparacion from './AceptarReparacion';
 import ModificarEstados from './ModificarEstados';
 import TodasLasReparaciones from './TodasLasReparaciones'; // Asegúrate de que el nombre del archivo y la ruta sean correctos
 import PendienteRetiro from './PendienteRetiro';
+import ReparacionConMensaje from './ReparacionConMensaje';
+
 
 
 
@@ -43,7 +45,9 @@ function VistaDistinta({ usuario, cerrarSesion }) {
                 <div className="menu-botones">
                     <button onClick={() => setVistaActual('aceptar')} className="boton-vista">Aceptar Reparaciones</button>
                     <button onClick={() => setVistaActual('modificar')} className="boton-vista">Modificar Estados</button>
-                    
+                    <button onClick={() => setVistaActual('reparacionConMensaje')} className="boton-vista">
+                      Ver Reparaciones Con Mensaje
+                    </button>
                     <button onClick={() => setVistaActual('pendienteRetiro')} className="boton-vista">
                         Reparaciones a Retirar ({contadorRetirar}) {/* Aquí se muestra el contador */}
                     </button>
@@ -64,7 +68,7 @@ function VistaDistinta({ usuario, cerrarSesion }) {
                 {vistaActual === 'modificar' && <ModificarEstados volver={volverAInicio} />}
                 
                 {vistaActual === 'pendienteRetiro' && (<PendienteRetiro volver={volverAInicio} actualizarContadorRetirar={actualizarContadorRetirar}/>)}
-                
+                {vistaActual === 'reparacionConMensaje' && <ReparacionConMensaje volver={volverAInicio} />}
                 {vistaActual === 'todas' && <TodasLasReparaciones volver={volverAInicio} />}
             </div>
 
