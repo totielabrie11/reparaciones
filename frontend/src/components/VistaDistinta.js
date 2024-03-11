@@ -12,20 +12,24 @@ import ReparacionConMensaje from './ReparacionConMensaje';
 function VistaDistinta({ usuario, cerrarSesion }) {
     const [vistaActual, setVistaActual] = useState('inicio');
     const [contadorRetirar, setContadorRetirar] = useState(0); // Nuevo estado para el contador
+    const [contadorConMensaje, setContadorConMensaje] = useState(0); // Nuevo estado para el contador de mensajes
 
-  // Función para cargar los contadores
-  const cargarContadores = async () => {
-    // Cargar el contador de reparaciones a retirar
+ const cargarContadores = async () => {
     try {
-      const respuesta = await fetch('http://localhost:3000/api/reparaciones/estado/finalizada-declinada');
-      const reparaciones = await respuesta.json();
-      setContadorRetirar(reparaciones.length);
-    } catch (error) {
-      console.error('Error al cargar el contador de reparaciones a retirar:', error);
-    }
+        // Reparaciones listas para retiro
+        const respuestaRetiro = await fetch('http://localhost:3000/api/reparaciones/estado/finalizada-declinada');
+        const reparacionesRetiro = await respuestaRetiro.json();
+        setContadorRetirar(reparacionesRetiro.length);
 
-    // Carga otros contadores aquí...
-  };
+        // Reparaciones con mensajes
+        const respuestaMensajes = await fetch('http://localhost:3000/api/reparaciones/mensajes');
+        const reparacionesConMensaje = await respuestaMensajes.json();
+        setContadorConMensaje(reparacionesConMensaje.length); // Asumiendo que el endpoint devuelve un objeto con una propiedad 'cantidad'
+    } catch (error) {
+        console.error('Error al cargar contadores:', error);
+    }
+};
+
   useEffect(() => {
     // Cargar contadores cuando el componente se monta o la vistaActual cambia
     cargarContadores();
@@ -46,7 +50,7 @@ function VistaDistinta({ usuario, cerrarSesion }) {
                     <button onClick={() => setVistaActual('aceptar')} className="boton-vista">Aceptar Reparaciones</button>
                     <button onClick={() => setVistaActual('modificar')} className="boton-vista">Modificar Estados</button>
                     <button onClick={() => setVistaActual('reparacionConMensaje')} className="boton-vista">
-                      Ver Reparaciones Con Mensaje
+                    Ver Reparaciones Con Mensaje ({contadorConMensaje})
                     </button>
                     <button onClick={() => setVistaActual('pendienteRetiro')} className="boton-vista">
                         Reparaciones a Retirar ({contadorRetirar}) {/* Aquí se muestra el contador */}
