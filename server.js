@@ -554,34 +554,36 @@ app.post('/api/reclamos/crear', (req, res) => {
     });
 });
 
-const uploadTicket = multer({ dest: 'documents/tickets/' });
+// Configuración de multer para guardar los archivos en un directorio temporal
+const uploadTicket = multer({ dest: 'tmp/' });
 
 app.post('/api/generar-pdf', uploadTicket.single('pdf'), (req, res) => {
   if (!req.file) {
-      return res.status(400).send('No se recibió el archivo');
+    return res.status(400).send('No se recibió el archivo');
+  }
+  
+  // Extraemos el ID del cuerpo de la solicitud
+  const id = req.body.id; // Asegúrate de que el ID se envíe desde el frontend
+  if (!id) {
+    // Si no se encuentra el ID, se envía un mensaje de error
+    return res.status(400).send('No se proporcionó el ID del ticket');
   }
 
-  // Construye la ruta completa al archivo
-  const filePath = `documents/tickets/ticket-reparacion-${req.file.filename}.pdf`;
+  // Ruta temporal donde multer guardó el archivo
+  const tempPath = req.file.path;
+  // El nuevo nombre que queremos para el archivo, incluyendo el ID
+  const newFilename = `ticket-reparacion-${id}.pdf`;
+  // Ruta final para el archivo renombrado
+  const finalPath = path.join('documents', 'tickets', newFilename);
 
-  // Cambia el nombre del archivo para incluir "ticket-reparacion"
-  fs.rename(req.file.path, filePath, function(err) {
+  fs.rename(tempPath, finalPath, (err) => {
     if (err) {
       console.error('Error al renombrar el archivo PDF:', err);
       return res.status(500).send('Error al procesar el archivo PDF');
     }
 
-    // Configura los encabezados para indicar el tipo de contenido
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename=${req.file.filename}`);
-
-    // Envía el contenido del archivo PDF como respuesta
-    res.sendFile(filePath, { root: '.' }, function(err) {
-      if (err) {
-        console.error('Error al enviar el archivo PDF:', err);
-      }
-      // No eliminamos el archivo, ya que quieres conservarlo
-    });
+    // Aquí simplemente respondemos que el archivo se ha guardado correctamente
+    res.status(200).json({ message: 'Archivo guardado', filePath: finalPath });
   });
 });
 

@@ -39,6 +39,7 @@ function IngresoReparacion({ volverAPrincipal }) {
 
   const enviarPDFAlBackend = async (id, blob) => {
     const formData = new FormData();
+    formData.append('id', id);
     formData.append('pdf', blob, `ticket-reparacion-${id}.pdf`);
     
     try {
@@ -97,11 +98,15 @@ function IngresoReparacion({ volverAPrincipal }) {
     
     // Ahora generamos el blob directamente desde jsPDF
     const blob = doc.output('blob');
-      // Envía el Blob al backend
-      await enviarPDFAlBackend(id, blob);
-
+    // Envía el Blob al backend una sola vez
+  try {
+    await enviarPDFAlBackend(id, blob);
+  } catch (error) {
+    console.error('Error al guardar el PDF:', error);
+    alert('Error al guardar el PDF. Por favor, intente nuevamente.');
+  }
     // Guardar el PDF
-    enviarPDFAlBackend(id, blob);
+   
     const pdfUrl = URL.createObjectURL(blob);
     window.open(pdfUrl, '_blank');
   };
