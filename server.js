@@ -196,7 +196,7 @@ app.get('/api/reparaciones/consultarBuscar', (req, res) => {
   });
 });
 
-// Endpoint que devuelve solo las reparaciones que tienen mensaje
+// Endpoint que devuelve solo las reparaciones que tienen mensaje pendiente
 
 app.get('/api/reparaciones/mensajes', (req, res) => {
   const archivoDbPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesDb.json');
@@ -207,15 +207,17 @@ app.get('/api/reparaciones/mensajes', (req, res) => {
     }
     try {
       const reparaciones = JSON.parse(data);
-      // Filtrar reparaciones que contienen mensajes
-      const reparacionesConMensajes = reparaciones.filter(reparacion => reparacion.mensajes && reparacion.mensajes.length > 0);
-      res.json(reparacionesConMensajes);
+      // Filtrar reparaciones que contienen al menos un mensaje pendiente
+      const reparacionesConMensajesPendientes = reparaciones.filter(reparacion => 
+        reparacion.mensajes && reparacion.mensajes.some(mensaje => mensaje.estado === "pendiente"));
+      res.json(reparacionesConMensajesPendientes);
     } catch (error) {
       console.error('Could not parse JSON:', error);
       res.status(500).send('Error al analizar los datos de reparaciones');
     }
   });
 });
+
 
 // Endpoint para agregar una nueva reparación
 app.post('/api/reparaciones', (req, res) => {
@@ -579,7 +581,7 @@ app.post('/api/reclamos/crear', (req, res) => {
 const archivoReparacionesPath = path.join(__dirname, 'frontend', 'src', 'data', 'reparacionesdb.json');
 console.log("🚀 ~ archivoReparacionesPath:", archivoReparacionesPath)
 
-// Endpoint para añadir un mensaje a una reparación
+// Endpoint para enviar un mensaje a de cliente al administrador 
 app.post('/api/mensajes/crear', (req, res) => {
     const { reparacionId, contenido } = req.body;
 
@@ -612,7 +614,8 @@ app.post('/api/mensajes/crear', (req, res) => {
         const nuevoMensaje = {
             id: Date.now(), // ID único para el mensaje
             contenido,
-            fecha: new Date().toISOString()
+            fecha: new Date().toISOString(),
+            estado: "pendiente" // Estado predeterminado para nuevos mensajes
         };
         reparaciones[reparacionIndex].mensajes.push(nuevoMensaje);
 
@@ -626,6 +629,56 @@ app.post('/api/mensajes/crear', (req, res) => {
         });
     });
 });
+
+// Endpoint para responder un mensaje de administrador a cliente
+app.post('/api/mensajes/:idMensaje/responder', (req, res) => {
+  const { idMensaje } = req.params;
+  const { respuesta } = req.body;
+
+  if (!respuesta) {
+      return res.status(400).send('La respuesta es requerida');
+  }
+
+  // Leer el archivo de reparaciones
+  fs.readFile(archivoReparacionesPath, 'utf8', (err, data) => {
+      if (err) {
+          console.error('Error al leer el archivo de reparaciones:', err);
+          return res.status(500).send('Error al procesar la respuesta');
+      }
+
+      const reparaciones = JSON.parse(data);
+
+      // Encontrar la reparación y el mensaje específico
+      let mensajeRespondido = false;
+      reparaciones.forEach(rep => {
+          if (rep.mensajes) {
+              const mensajeIndex = rep.mensajes.findIndex(mensaje => mensaje.id.toString() === idMensaje);
+              if (mensajeIndex !== -1) {
+                  // Actualizar el mensaje como respondido
+                  rep.mensajes[mensajeIndex].estado = 'respondido';
+                  rep.mensajes[mensajeIndex].respondido = true;
+                  rep.mensajes[mensajeIndex].respuesta = respuesta;
+                  rep.mensajes[mensajeIndex].fechaRespuesta = new Date().toISOString();
+                  mensajeRespondido = true;
+              }
+          }
+      });
+
+      if (!mensajeRespondido) {
+          return res.status(404).send('Mensaje no encontrado');
+      }
+
+      // Guardar la lista actualizada de reparaciones
+      fs.writeFile(archivoReparacionesPath, JSON.stringify(reparaciones, null, 2), 'utf8', (err) => {
+          if (err) {
+              console.error('Error al guardar la respuesta en el mensaje:', err);
+              return res.status(500).send('Error al guardar la respuesta');
+          }
+          res.send({ mensaje: 'Respuesta añadida con éxito', idMensaje });
+      });
+  });
+});
+
 
 
 

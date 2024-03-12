@@ -43,3 +43,23 @@
 .colorNombre {
     color: rgb(130, 149, 101);
 }
+
+.mensaje {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-left: 3px solid #007bff; /* Color para preguntas */
+  background-color: #f8f9fa;
+}
+
+.mensaje-respuesta {
+  background-color: #e9ecef; /* Un fondo ligeramente diferente para respuestas */
+  border-color: #28a745; /* Color para respuestas */
+}
+
+.mensaje p {
+  margin: 5px 0;
+}
+
+.btn-responder {
+  margin-top: 10px;
+}

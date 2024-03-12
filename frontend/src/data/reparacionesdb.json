@@ -348,14 +348,7 @@
     "movimientos": "",
     "fechaIngreso": "sin fecha",
     "IDTicket": "F1811",
-    "id": 16,
-    "mensajes": [
-      {
-        "id": 1710179853718,
-        "contenido": "tienen idea que está pasando con mi reparación?",
-        "fecha": "2024-03-11T17:57:33.718Z"
-      }
-    ]
+    "id": 16
   },
   {
     "tipoEntidad": "persona",
@@ -378,19 +371,7 @@
     "movimientos": "",
     "fechaIngreso": "sin fecha",
     "IDTicket": "Q2629",
-    "id": 17,
-    "mensajes": [
-      {
-        "id": 1710173387060,
-        "contenido": "como tengo que hacer?",
-        "fecha": "2024-03-11T16:09:47.060Z"
-      },
-      {
-        "id": 1710174997358,
-        "contenido": "ya está locomia?",
-        "fecha": "2024-03-11T16:36:37.358Z"
-      }
-    ]
+    "id": 17
   },
   {
     "tipoEntidad": "persona",
@@ -424,6 +405,67 @@
         "id": 1710173279977,
         "contenido": "necesito respuesta",
         "fecha": "2024-03-11T16:07:59.977Z"
+      }
+    ]
+  },
+  {
+    "tipoEntidad": "persona",
+    "nombre": "Pochi mendez",
+    "dniCuit": "30021465",
+    "domicilio": "vacca 335",
+    "provincia": "ramos mejia",
+    "email": "cintianatali_m1@gmail.com",
+    "telefono": "1158235845",
+    "nombreContacto": "charly",
+    "modeloBomba": "DVRII",
+    "opcionNumeroSerie": "noTiene",
+    "numeroSerie": "",
+    "tipoServicio": "revision",
+    "causa": "no anda del todo bien tiene un tornillo flojo",
+    "observaciones": "ni idea",
+    "estado": "sin ingresar",
+    "descargaTicket": "/documents/tickets/ticket-reparacion-19.pdf",
+    "accionesPendientes": "Se debe enviar la reparación a Dosivac junto con el ticket de pre-carga a la siguiente dirección ",
+    "movimientos": "",
+    "fechaIngreso": "sin fecha",
+    "IDTicket": "K4145",
+    "id": 19,
+    "mensajes": [
+      {
+        "id": 1710205220879,
+        "contenido": "a donde debo llevar la unidad",
+        "fecha": "2024-03-12T01:00:20.879Z",
+        "estado": "respondido",
+        "respondido": true,
+        "respuesta": "puedes traerla a dosivac",
+        "fechaRespuesta": "2024-03-12T01:00:39.912Z"
+      },
+      {
+        "id": 1710205292560,
+        "contenido": "me pueden decir donde es el lugar",
+        "fecha": "2024-03-12T01:01:32.560Z",
+        "estado": "respondido",
+        "respondido": true,
+        "respuesta": "ES DONDE RAMBO PERDIO LA BINCHA COLORADA",
+        "fechaRespuesta": "2024-03-12T01:04:22.327Z"
+      },
+      {
+        "id": 1710205301253,
+        "contenido": "por que tardan tanto en reposnder",
+        "fecha": "2024-03-12T01:01:41.253Z",
+        "estado": "respondido",
+        "respondido": true,
+        "respuesta": "tarde solo un minuto",
+        "fechaRespuesta": "2024-03-12T01:03:18.479Z"
+      },
+      {
+        "id": 1710205354808,
+        "contenido": "por que debo llevar el ticket de pre ingreso no lo puedo llevar asi nomas",
+        "fecha": "2024-03-12T01:02:34.808Z",
+        "estado": "respondido",
+        "respondido": true,
+        "respuesta": "para QUE QUIEN RECIBE PUEDA DARLE INGERSO OK",
+        "fechaRespuesta": "2024-03-12T01:03:49.989Z"
       }
     ]
   }

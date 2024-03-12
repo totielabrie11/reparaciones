@@ -25,11 +25,39 @@ function ListaReparacionesConMensajes( {volver} ) {
     fetchReparacionesConMensajes();
   }, []);
 
+  const responderMensaje = async (idMensaje, respuesta) => {
+    try {
+      // Aquí realizarías la llamada a la API para enviar la respuesta
+      const response = await fetch(`http://localhost:3000/api/mensajes/${idMensaje}/responder`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ respuesta }),
+      });
+      if (!response.ok) {
+        throw new Error('La respuesta no pudo ser enviada');
+      }
+
+      // Actualizar el estado local si es necesario, por ejemplo, para quitar el mensaje de la lista o actualizar el contador
+      // Puedes optar por recargar la lista de reparaciones con mensajes para reflejar los cambios
+      const data = await response.json();
+      console.log('Respuesta enviada:', data);
+
+      // Opcional: Cerrar el modal de mensaje activo
+      setMensajeActivo(null);
+    } catch (error) {
+      console.error('Error al responder mensaje:', error);
+      // Manejar el error, por ejemplo, mostrar un mensaje al usuario
+    }
+  };
+
+
   const verMensaje = (reparacion) => {
-    // Suponiendo que 'reparacion.mensajes' es un array de mensajes
+    const mensajes = reparacion.mensajes || []; // Asegurarse de que siempre haya un array
     const mensajeConDetalle = {
-      ...reparacion.mensajes[reparacion.mensajes.length - 1], // Obtener el último mensaje
-      nombreReparacion: reparacion.nombre // Incluir el nombre de la reparación
+      ...reparacion, // Usar la reparación completa podría ser más útil
+      mensajes, // Ahora garantizas que mensajes es un array, incluso si está vacío
     };
     setMensajeActivo(mensajeConDetalle);
   };
@@ -57,12 +85,13 @@ function ListaReparacionesConMensajes( {volver} ) {
       )}
   
       {mensajeActivo && (
-        <ModalMensaje
-          mensaje={mensajeActivo}
-          isOpen={Boolean(mensajeActivo)}
-          onClose={() => setMensajeActivo(null)}
-        />
-      )}
+      <ModalMensaje
+        mensaje={mensajeActivo}
+        isOpen={Boolean(mensajeActivo)}
+        onClose={() => setMensajeActivo(null)}
+        onResponder={responderMensaje}
+      />
+    )}
       <button onClick={volver} className="btn-volver">Volver a la vista principal</button>
     </div>
   );
