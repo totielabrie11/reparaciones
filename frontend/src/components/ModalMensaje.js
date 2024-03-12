@@ -27,7 +27,7 @@ const ModalMensaje = ({ mensaje, isOpen, onClose, onResponder }) => {
         <h2 className='colorNombre'>Conversación: {mensaje.nombreReparacion}</h2>
         <div className="modal-body">
           {mensajes.map((msg, index) => (
-            <div key={index} className="mensaje">
+            <div key={index} className={msg.respondido ? "mensaje mensaje-respuesta" : "mensaje"}>
               <p><strong>Fecha:</strong> {new Date(msg.fecha).toLocaleString()}</p>
               <p><strong>Contenido:</strong> {msg.contenido}</p>
               {msg.respondido && (
@@ -56,6 +56,7 @@ const ModalMensaje = ({ mensaje, isOpen, onClose, onResponder }) => {
       </div>
     </div>
   );
+  
 };
 
 export default ModalMensaje;
