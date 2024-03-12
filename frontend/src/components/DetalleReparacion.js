@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import Modal from './Modal'; // Asegura que este componente está implementado correctamente
+import React, { useState, useEffect, useCallback  } from 'react';
+import Modal from './Modal'; // Componente para acciones sobre la reparación
+import ModalMensajeCliente from './ModalMensajeCliente'; // Componente para mostrar mensajes
 import '../styles/consultaReparacion.css';
 
 function DetalleReparacion({ reparacion, cerrarDetalle }) {
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [mensajes, setMensajes] = useState([]);
+  const [mostrarModalMensajes, setMostrarModalMensajes] = useState(false);
+
   const movimientosValidos = Array.isArray(reparacion.movimientos) ? reparacion.movimientos : [reparacion.movimientos];
   const downloadUrl = reparacion.archivoPresupuesto ? `http://localhost:3000/descargar/${encodeURIComponent(reparacion.archivoPresupuesto)}` : '#';
 
@@ -12,7 +16,6 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
 
   const mostrarBotonAcciones = accionesATomar.includes("Presupuesto adjuntado y pendiente de aprobación");
 
-  
 
   const abrirReclamo = async (id) => {
     const reclamo = prompt("Por favor, ingrese el motivo de su reclamo:");
@@ -64,6 +67,29 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
     }
   };
   
+
+  // Función para cargar mensajes asociados a la reparación
+  const cargarMensajes = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/reparaciones/mensajes/${reparacion.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMensajes(data.mensajes); // Asume que la respuesta de la API tiene una propiedad 'mensajes'
+      } else {
+        throw new Error('Error al cargar los mensajes.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }, [reparacion.id]);
+
+
+  // Cargar mensajes al abrir el modal de mensajes
+  useEffect(() => {
+    cargarMensajes();
+  }, [cargarMensajes]);
+  
+
   // Funciones para manejar las acciones del modal
   const handleAceptar = async () => {
     console.log('Aceptar');
@@ -152,6 +178,25 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
       <p>Estado: {reparacion.estado}</p>
       {reparacion.fechaEstimadaFin && <p>Fecha Estimada de Finalización: {reparacion.fechaEstimadaFin}</p>}
       {reparacion.fechaIngreso && <p>Fecha de Ingreso: {reparacion.fechaIngreso}</p>}
+      <button onClick={() => setMostrarModalMensajes(true)}>Ver Comunicaciones</button>
+      <button onClick={cerrarDetalle}>Volver</button>
+
+      {mostrarModalMensajes && (
+        <ModalMensajeCliente
+          mensajes={mensajes} // Array de mensajes
+          isOpen={mostrarModalMensajes}
+          onClose={() => setMostrarModalMensajes(false)}
+        />
+      )}
+
+      {mostrarModalMensajes && (
+        <ModalMensajeCliente
+          mensajes={mensajes} // Asegúrate de que 'mensajes' es un array de mensajes relevantes para mostrar
+          isOpen={mostrarModalMensajes}
+          onClose={() => setMostrarModalMensajes(false)}
+        />
+      )}
+      
       <h3>Acciones Pendientes:</h3>
       {reparacion.accionesPendientes ? (
         <>
@@ -202,7 +247,11 @@ function DetalleReparacion({ reparacion, cerrarDetalle }) {
         onAccept={handleAceptar}
         onDecline={handleDeclinar}
       />
+
+      
     </div>
+
+    
   );
 }
 
